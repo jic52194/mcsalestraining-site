@@ -125,7 +125,7 @@ ${schemas.map(ld).join("")}
 <p class="legal"><a href="/privacy-policy">Privacy Policy</a> · <a href="/terms-of-service">Terms of Service</a> · <a href="/terms-of-use">Terms of Use</a> · <a href="/disclaimer">Disclaimer</a> · <a href="#" data-consent-open>Cookie settings</a></p>
 <p class="fine">Owned and operated by <a href="https://raibrollc.com" rel="noopener">Raibro LLC</a>. © ${TODAY.slice(0, 4)} MC Sales Training. All rights reserved.</p>
 </div></footer>
-<script src="/assets/app.js?v=${TODAY}" defer></script><script src="/assets/t.js" data-site="mcsalestraining" data-banner="1" defer></script>
+<script src="/assets/app.js?v=${TODAY}" defer></script><script src="/assets/t.js" data-site="mcsalestraining" data-privacy="/privacy-policy" data-banner="1" defer></script>
 </body></html>`;
 }
 
