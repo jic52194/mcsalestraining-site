@@ -3,6 +3,8 @@
   "use strict";
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  // first-party analytics (t.js loads after this file; it respects the visitor's analytics choice and GPC)
+  var track = function (type, label, props) { try { if (window.csoTrack) window.csoTrack.event(type, label, props || {}); } catch (err) {} };
 
   // mobile menu
   var burger = $("[data-burger]"), drawer = $("[data-drawer]");
@@ -51,6 +53,7 @@
       var html = '<div class="embed form-embed"><iframe src="https://links.mcsalestraining.com/widget/form/' + id + '" id="inline-' + id + '" data-layout="{\'id\':\'INLINE\'}" data-trigger-type="alwaysShow" data-activation-type="alwaysActivated" data-deactivation-type="neverDeactivate" data-form-name="' + name.replace(/"/g, "&quot;") + '" data-height="' + h + '" data-layout-iframe-id="inline-' + id + '" data-form-id="' + id + '" title="' + name.replace(/"/g, "&quot;") + '" style="width:100%;height:' + h + 'px;border:none;border-radius:8px"></iframe><p class="small">🔒 Private. No spam. If the form doesn’t load, disable ad blockers for this domain.</p></div>';
       dialog("form-dialog", a.getAttribute("data-form-title") || a.textContent.replace(/[→↓]/g, "").trim(), html);
       loadScript("https://links.mcsalestraining.com/js/form_embed.js");
+      track("form_open", name);
     });
   });
 
@@ -63,7 +66,33 @@
       var d = document.getElementById("pay-dialog");
       if (!d) { d = dialog("pay-dialog", "8-Week Sales Challenge", pay.innerHTML); } else d.showModal();
       loadScript("https://js.stripe.com/v3/buy-button.js");
+      track("begin_checkout", "8-Week Sales Challenge", { value: 392, currency: "USD" });
     });
+  });
+
+  // Conversion events for the first-party tracker (t.js, window.csoTrack). t.js already logs every click by its label;
+  // these add one stable name per primary action so the funnel can be counted whatever the button says.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]"); if (!a) return;
+    var h = a.getAttribute("href") || "";
+    if (a.hasAttribute("data-enroll")) track("cta_enroll", "8-Week Sales Challenge");
+    else if (/^\/sales-calendar(#|$)/.test(h)) track("cta_book_call", "Fit call");
+    else if (/^\/free-resources(#|$)/.test(h)) track("cta_free_tools", "Sales Vault");
+    else if (/^\/program-pricing(#|$)/.test(h)) track("cta_programs", "Program pricing");
+  }, true);
+  // GoHighLevel forms and the booking calendar run in iframes, so t.js can't see them submit. After a successful
+  // submission GHL's iframe asks the page (form_embed.js) to store the contact: message ["set-sticky-contacts", ...].
+  // Count that once per iframe as a lead. Only the event name and the form's name are recorded, never the payload.
+  var leadSeen = [];
+  window.addEventListener("message", function (e) {
+    if (!/^https:\/\/(links\.mcsalestraining\.com|link\.casperportal\.net)$/.test(e.origin)) return;
+    var d = e.data, act = Array.isArray(d) ? d[0] : (d && typeof d === "object" ? d.action || d.type : d);
+    if (act !== "set-sticky-contacts") return;
+    var frame = $$("iframe").filter(function (f) { return f.contentWindow === e.source; })[0];
+    if (frame && leadSeen.indexOf(frame) >= 0) return;
+    if (frame) leadSeen.push(frame);
+    var cal = !!frame && /\/booking\//.test(frame.src);
+    track(cal ? "booking_submit" : "lead_submit", cal ? "Booking calendar" : (frame && (frame.getAttribute("data-form-name") || frame.title)) || "form");
   });
 
   // YouTube lite embeds
