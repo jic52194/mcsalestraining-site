@@ -62,7 +62,8 @@ export const NAV = [
   ["About", [["About Us", "/about"], ["Our Philosophy", "/our-philosophy"], ["Why Work With Us", "/why-work-with-us"], ["The Secret Sauce", "/the-secret-sauce"], ["Our Team", "/our-team"], ["Proof / Results", "/proof"], ["FAQ", "/faq"], ["Contact", "/contact"]]],
   ["Programs", [["8-Week Challenge", "/8-week-challenge"], ["Program Pricing", "/program-pricing"], ["Individual Coaching", "/individual-coaching"], ["Team Training", "/team-training"], ["Private Advisory", "/private-advisory"], ["Private Sales Advisory", "/private-sales-advisory"], ["Membership", "/membership"], ["AI Executive", "/ai-executive"]]],
   ["Courses", [["Courses On Demand", "/courses-on-demand"], ["The Mechanics of Sales", "/the-mechanics-of-sales"], ["The Language of Persuasion", "/learn-to-earn"], ["How the System Works", "/how-the-system-works"]]],
-  ["Free Resources", [["The Sales Vault", "/free-resources"], ["Mini-Book", "/mini-book"], ["Daily Non-Negotiables", "/daily-non-negotiables"], ["Word Tracks & Rebuttals", "/free-word-tracks"]]],
+  ["Free Mini-Book", "/free-mini-book"],
+  ["Free Resources", [["The Sales Vault", "/free-resources"], ["Free Mini-Book", "/free-mini-book"], ["Daily Non-Negotiables", "/daily-non-negotiables"], ["Word Tracks & Rebuttals", "/free-word-tracks"]]],
 ];
 
 export const urls = []; // [path, lastmod, priority]
@@ -119,7 +120,7 @@ ${schemas.map(ld).join("")}
 <p><b>We respond Monday–Friday</b>, typically within 24 hours on business days.<br>Email <a href="mailto:${EMAIL}">${EMAIL}</a><br>Text <a href="sms:${PHONE_TEL}">${PHONE_TEXT}</a> · Call <a href="tel:${PHONE_TEL}">${PHONE_VANITY}</a></p>
 <p class="social">${SOCIAL.map(([n, u]) => `<a href="${u}" rel="noopener me" target="_blank">${esc(n)}</a>`).join(" · ")}</p></div>
 <div><p class="fh">Programs</p><p><a href="/8-week-challenge">8-Week Challenge</a><br><a href="/program-pricing">Program Pricing</a><br><a href="/individual-coaching">Individual Coaching</a><br><a href="/team-training">Team Training</a><br><a href="/private-advisory">Private Advisory</a><br><a href="/private-sales-advisory">Private Sales Advisory</a><br><a href="/membership">Membership</a><br><a href="/ai-executive">AI Executive</a></p></div>
-<div><p class="fh">Courses &amp; free tools</p><p><a href="/courses-on-demand">Courses On Demand</a><br><a href="/the-mechanics-of-sales">The Mechanics of Sales</a><br><a href="/learn-to-earn">The Language of Persuasion</a><br><a href="/free-resources">The Sales Vault</a><br><a href="/mini-book">Mini-Book</a><br><a href="/daily-non-negotiables">Daily Non-Negotiables</a><br><a href="/free-word-tracks">Word Tracks &amp; Rebuttals</a></p></div>
+<div><p class="fh">Courses &amp; free tools</p><p><a href="/courses-on-demand">Courses On Demand</a><br><a href="/the-mechanics-of-sales">The Mechanics of Sales</a><br><a href="/learn-to-earn">The Language of Persuasion</a><br><a href="/free-resources">The Sales Vault</a><br><a href="/free-mini-book">Free Mini-Book</a><br><a href="/daily-non-negotiables">Daily Non-Negotiables</a><br><a href="/free-word-tracks">Word Tracks &amp; Rebuttals</a></p></div>
 <div><p class="fh">Company</p><p><a href="/about">About Us</a><br><a href="/our-team">Our Team</a><br><a href="/how-the-system-works">How the System Works</a><br><a href="/proof">Proof / Results</a><br><a href="/faq">FAQ</a><br><a href="/contact">Contact</a><br><a href="/sales-calendar">Book a Strategy Call</a><br><a href="/sitemap">Site Directory</a></p></div>
 </div>
 <p class="legal"><a href="/privacy-policy">Privacy Policy</a> · <a href="/terms-of-service">Terms of Service</a> · <a href="/terms-of-use">Terms of Use</a> · <a href="/disclaimer">Disclaimer</a> · <a href="#" data-consent-open>Cookie settings</a></p>

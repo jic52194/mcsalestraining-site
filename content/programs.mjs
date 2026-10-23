@@ -22,14 +22,14 @@ const CH_FAQ = [
   ["Is it for new reps or veterans?", "Both — new reps get structure; vets get consistency, cleaner qualifying, and stronger commitment."],
   ["Is this BDC-only?", "No — the structure applies to floor + BDC: habits, follow-up, qualifying, commitment, and objections."],
   ["What’s included?", "Weekly videos, coaching cadence guidance, scripts/word-tracks, and roleplay-style prompts."],
-  ["How much does it cost?", "Starts at $49/week (see enrollment for current options)."],
+  ["How much does it cost?", "$392 for the 8-week program (see enrollment for details)."],
 ];
 export function challenge() {
   const total = LESSONS.reduce((n, w) => n + w[2].length, 0);
   const body = hero({ kicker: "Mark Casper led • 8-week execution system", h1: "Build consistent sales habits in 8 weeks — with a weekly structure your team actually runs.",
     lede: "Weekly videos + coaching cadence + scripts/word-tracks + roleplay prompts — organized into an 8-week map so floor + BDC always know what to run next.",
     ctas: [["Apply / Join the Challenge", "/8-week-challenge-apply"], ["See the week-by-week map", "#curriculum", "ghost"]],
-    note: "Takes ~60 seconds • Starts at $49/week • Built for floor reps, BDC/Internet reps, and desk/BDC managers",
+    note: "Takes ~60 seconds • $392 for the 8-week program • Built for floor reps, BDC/Internet reps, and desk/BDC managers",
     chips: ["Mark Casper led", "Week-by-week curriculum (not “tips”)", `${total} lesson videos`, "Weekly cadence installed"] })
   + section("Who it’s for, what it fixes, and what you’ll run each week.", `<div class="cards c2">
 <article class="card"><h3>Who it’s for</h3>${bullets(["Floor sales reps", "BDC / Internet reps", "Desk & BDC managers who need consistent weekly execution (not “tips”)"])}</article>
@@ -39,22 +39,22 @@ export function challenge() {
   + section("Watch the program structure", `<div class="two"><div>${yt("myS_GgTS2L0", "MC Sales Training — 8-Week Challenge Preview", { playerId: "mc8wPlayer" })}<p class="small">Now playing: <span id="nowPlaying">8-Week Challenge preview</span></p></div>
 <div><p>Click any lesson below to swap the main video instantly. Built for weekly execution — not “motivation content.”</p>
 <div class="panel"><h3>Join the 8-Week Challenge</h3><p>A week-by-week operating system you run: habits, follow-up discipline, qualifying, commitment, objections, and professionalism — with scripts + roleplay prompts to keep execution consistent.</p>
-<p class="price">$49 / week</p><p class="small">Starts at $49/week (see enrollment for current options)</p>
+<p class="price">$392</p><p class="small">For the 8-week program (see enrollment for details)</p>
 ${bullets(["Cap: 25 seats per weekly intake", "Includes: videos + cadence + scripts + prompts", "Support included: CarSalesSoftware.com support (Mon–Fri) + monthly CRM group coaching (last Friday each month)"])}
 ${ctas([["Apply / Join", "/8-week-challenge-apply"], ["Talk to us first", "/sales-calendar", "ghost"]])}<p class="note">Not ready yet? <a href="/free-resources">Start with Free Resources →</a></p></div></div></div>`, { id: "watch" })
   + section("Everything needed to make daily activity non-negotiable.", cards([
     { t: "8-week curriculum map", d: "Run the right focus this week (not “everything at once”)." }, { t: "Weekly Mark-led videos", d: "Short lessons tied to real floor/BDC moments." },
     { t: "Coaching cadence guidance", d: "Manager rhythm for consistency and accountability." }, { t: "Scripts / word-tracks", d: "Qualifying, commitment, objections, and follow-up." },
     { t: "Roleplay-style prompts", d: "Practice what happens on Tuesday, not theory." }, { t: "Structure that reduces stalls", d: "Cleaner commitment so “I’ll think about it” doesn’t drift." }]), { kicker: "What you get", soft: true })
-  + section("Three steps. Then you run the cadence.", steps([["Apply / Join", "Enroll (starts at $49/week) on the <a href=\"/8-week-challenge-apply\">application page</a> or <a href=\"/#enroll\">enroll directly</a>."], ["Follow the week-by-week map", "Videos + scripts + prompts tell you what to run."], ["Execute on the floor / in BDC", "Managers coach this week’s focus — and repetition builds consistency."]]), { kicker: "How it works" })
+  + section("Three steps. Then you run the cadence.", steps([["Apply / Join", "Enroll ($392 for the 8-week program) on the <a href=\"/8-week-challenge-apply\">application page</a> or <a href=\"/#enroll\">enroll directly</a>."], ["Follow the week-by-week map", "Videos + scripts + prompts tell you what to run."], ["Execute on the floor / in BDC", "Managers coach this week’s focus — and repetition builds consistency."]]), { kicker: "How it works" })
   + section("8-week map (click a lesson to play)", `<div class="lessons">${LESSONS.map(([t, d, ls]) => `<div class="week"><h3>${t}</h3><p class="small">${d} • ${ls.length} lessons</p><ul>${ls.map(([id, n]) => `<li><a href="https://www.youtube.com/watch?v=${id}" data-lesson="${id}" data-title="${n.replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${n}</a></li>`).join("")}</ul></div>`).join("")}</div>
 <div class="panel" style="margin-top:18px"><h3>What Mark focuses on</h3><p>Mark teaches the floor: habits, investigation, commitment, turnover, and follow-up—built to create consistent performance. This isn’t theory. It’s the weekly execution sequence—what to do, what to say, and how to stop drifting so your results stabilize.</p>
 ${bullets(["Weeks 1–2: Habit reconstruction + daily cadence.", "Weeks 3–4: Investigation (finding the decision drivers and money).", "Weeks 5–6: Commitment + numbers (no more price fights).", "Weeks 7–8: Turnover + follow-up (residual + referrals)."])}<p>Read more about <a href="/mark">Mark Casper</a>.</p></div>`, { kicker: "Curriculum • Habits → Relationships → Process → Qualifying → Deal → Objections → Professionalism → Final", id: "curriculum", soft: true })
   + faqBlock(CH_FAQ, "Quick clarity before you apply.", "No fluff — just what you need to decide.")
-  + section("", ctas([["Apply / Join the Challenge", "/8-week-challenge-apply"], ["Compare all programs", "/program-pricing", "ghost"]], "60 seconds • Starts at $49/week • Weekly intake capped at 25 seats"), { center: true });
-  return page({ path: "/8-week-challenge", title: "8-Week Challenge Curriculum | MC Sales Training", desc: "The Mark Casper-led 8-week map: 35 lesson videos, scripts, roleplay prompts and a coaching cadence for floor and BDC. Starts at $49/week.",
+  + section("", ctas([["Apply / Join the Challenge", "/8-week-challenge-apply"], ["Compare all programs", "/program-pricing", "ghost"]], "60 seconds • $392 for the 8-week program • Weekly intake capped at 25 seats"), { center: true });
+  return page({ path: "/8-week-challenge", title: "8-Week Challenge Curriculum | MC Sales Training", desc: "The Mark Casper-led 8-week map: 35 lesson videos, scripts, roleplay prompts and a coaching cadence for floor and BDC. $392 for 8 weeks.",
     h1: "Build consistent sales habits in 8 weeks", body, crumbs: C(["Programs", "/program-pricing"], ["8-Week Challenge", "/8-week-challenge"]), faqs: CH_FAQ, priority: "0.9",
-    schema: [course("/8-week-challenge", "8-Week Challenge", "Mark Casper-led 8-week execution system with weekly video lessons, scripts and roleplay prompts for dealership floor and BDC reps.", { offers: { "@type": "Offer", price: "49", priceCurrency: "USD", category: "Subscription", description: "Starts at $49/week", url: SITE + "/8-week-challenge-apply" }, hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", instructor: { "@type": "Person", name: "Mark Casper", url: SITE + "/mark" } } })] });
+    schema: [course("/8-week-challenge", "8-Week Challenge", "Mark Casper-led 8-week execution system with weekly video lessons, scripts and roleplay prompts for dealership floor and BDC reps.", { offers: { "@type": "Offer", price: "392", priceCurrency: "USD", description: "$392 for the 8-week program", url: SITE + "/8-week-challenge-apply" }, hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", instructor: { "@type": "Person", name: "Mark Casper", url: SITE + "/mark" } } })] });
 }
 
 // ── /8-week-challenge-apply ──
@@ -80,7 +80,7 @@ export function challengeApply() {
     { k: "Weeks 5–6", t: "Working the deal", d: "Structure for presenting numbers, handling stalls, and keeping momentum without sounding aggressive.", after: "Theme: clarity beats pressure." },
     { k: "Weeks 7–8", t: "Objections + professional standard", d: "Modern rebuttals, confidence language, and standards that protect your income long-term.", after: "Theme: repeatable excellence." }], 4) + ctas([unlock, ["Talk to Us →", "/contact", "ghost"]]), { kicker: "Curriculum" })
   + faqBlock(AP_FAQ, "8-week challenge questions", "Quick clarity before you unlock access.")
-  + section("Unlock the 8-Week Challenge", `<div class="two"><div><p>Enter your info and we’ll route you to access. Keep it simple—then execute week-by-week.</p>${bullets(["Weekly focus so your month stops depending on luck.", "Language + structure that prevents price fights.", "Accountability that forces follow-through.", "Built for real dealership floors—no fluff."])}<p class="note">Tip: After you unlock, run it for 7 days before “tweaking” anything. Prefer to pay and start now? <a href="/#enroll">Enroll at $49/week</a>.</p></div><div>${ghlForm("challenge", { title: "8-Week Challenge application" })}</div></div>${formEmbedScript}`, { kicker: "Unlock access", id: "apply" })
+  + section("Unlock the 8-Week Challenge", `<div class="two"><div><p>Enter your info and we’ll route you to access. Keep it simple—then execute week-by-week.</p>${bullets(["Weekly focus so your month stops depending on luck.", "Language + structure that prevents price fights.", "Accountability that forces follow-through.", "Built for real dealership floors—no fluff."])}<p class="note">Tip: After you unlock, run it for 7 days before “tweaking” anything. Prefer to pay and start now? <a href="/#enroll">Enroll for $392</a>.</p></div><div>${ghlForm("challenge", { title: "8-Week Challenge application" })}</div></div>${formEmbedScript}`, { kicker: "Unlock access", id: "apply" })
   + section("Ready to stop improvising?", `<p class="lead-in">Unlock the 8-week cadence. Install the standards. Make “consistent” normal.</p>${ctas([unlock, ["Talk to Us →", "/contact", "ghost"]])}`, { center: true, soft: true });
   return page({ path: "/8-week-challenge-apply", title: "Apply: 8-Week Sales Challenge | MC Sales Training", desc: "Apply for the 8-Week Challenge: weekly execution that fixes follow-up, sharpens language and builds predictable commission months.",
     h1: "The 8-Week Challenge", body, crumbs: C(["Programs", "/program-pricing"], ["8-Week Challenge", "/8-week-challenge"], ["Apply", "/8-week-challenge-apply"]), faqs: AP_FAQ, priority: "0.8" });
@@ -100,7 +100,7 @@ export function programPricing() {
     { k: "For Teams", t: "Team Training", d: "Standardize language and performance across the entire store.", list: ["Unified scripts + process", "Coaching cadence", "Metrics that drive behavior"], cta: [["Learn More →", "/team-training"], ["See Proof →", "/proof"]] },
     { k: "High-Touch", t: "Private Advisory", d: "Direct advisory for owners and leaders.", list: ["Leadership cadence", "Standards + accountability", "Messaging + system clarity"], cta: [["Learn More →", "/private-advisory"], ["Talk to Us →", "/contact"]] }]), { kicker: "Programs", id: "program-options" })
   + section("Other ways to start", cards([
-    { t: "8-Week Challenge", d: "A structured sprint with weekly live coaching. $49/week, cancel anytime.", cta: ["See the Challenge →", "/8-week-challenge"] },
+    { t: "8-Week Challenge", d: "A structured sprint with weekly live coaching. $392 for the 8-week program.", cta: ["See the Challenge →", "/8-week-challenge"] },
     { t: "Courses On Demand", d: "Self-paced: The Mechanics of Sales and The Language of Persuasion.", cta: ["Browse Courses →", "/courses-on-demand"] },
     { t: "Membership", d: "Community and membership levels, from free Vault access to VIP Advisory.", cta: ["See Membership →", "/membership"] }]), { soft: true })
   + faqBlock(PP_FAQ);

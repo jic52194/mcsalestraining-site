@@ -9,10 +9,10 @@ export function freeResources() {
     note: "Pick a resource → enter your info → delivered instantly. No spam.", chips: ["Built for dealership floors + BDC", "Scripts tied to exact moments", "Follow‑up that earns replies"] })
   + section("Pick One. Run It for 7 Days.", `<p class="lead-in">Use it exactly as written. Measure replies, appointments, and next steps—then tighten. Don’t “customize” on day one.</p><div class="cards c3">
 <article class="card" id="daily-non-negotiables"><p class="ck">Ready • Instant · Habits • 1‑Page</p><h3><a href="/daily-non-negotiables">Daily Non‑Negotiables</a></h3><p>A first‑hour routine that forces momentum before excuses show up.</p>${bullets(["Stops drift and forces first‑hour execution", "Fast checklist you can run today", "Built for real dealership floors"])}<p class="ctas">${formButton("Get Instant Download →", "dnn", "/daily-non-negotiables#get", "sm", "Daily Non-Negotiables")}</p></article>
-<article class="card" id="sales-mini-book"><p class="ck">Ready • Instant · Blueprint • PDF</p><h3><a href="/mini-book">Sales Mini‑Book</a></h3><p>Habits, scripts, and follow‑up standards that make consistent months normal.</p>${bullets(["Daily structure + clean language", "Follow‑up that earns replies", "Built from real dealership floors"])}<p class="ctas">${formButton("Get Instant Download →", "minibook", "/mini-book#get", "sm", "Sales Mini-Book")}</p></article>
+<article class="card" id="sales-mini-book"><p class="ck">Ready • Instant · Blueprint • PDF</p><h3><a href="/free-mini-book">Sales Mini‑Book</a></h3><p>Habits, scripts, and follow‑up standards that make consistent months normal.</p>${bullets(["Daily structure + clean language", "Follow‑up that earns replies", "Built from real dealership floors"])}<p class="ctas">${formButton("Get Instant Download →", "minibook", "/free-mini-book#get", "sm", "Sales Mini-Book")}</p></article>
 <article class="card" id="word-tracks"><p class="ck">Ready • Instant · Scripts • Rebuttals</p><h3><a href="/free-word-tracks">Word Tracks &amp; Rebuttals</a></h3><p>Say the words. Re‑open stalled deals without sounding pushy.</p>${bullets(["Price, spouse, “think about it”", "Use on text, phone, and the floor", "Tone + posture guidance"])}<p class="ctas">${formButton("Get Instant Download →", "wordtracks", "/free-word-tracks#get", "sm", "Word Tracks & Rebuttals")}</p></article></div>
 <p class="note">🔒 Locked &amp; private. We hate spam too.</p>`, { kicker: "Start here", soft: true })
-  + related([["How the System Works", "/how-the-system-works", "Structure, language and habits."], ["8-Week Challenge", "/8-week-challenge", "Weekly accountability: $49/week."], ["Book a strategy call", "/sales-calendar", "Find the one leak costing you deals."]], "Want weekly accountability?");
+  + related([["How the System Works", "/how-the-system-works", "Structure, language and habits."], ["8-Week Challenge", "/8-week-challenge", "Weekly accountability: $392 for 8 weeks."], ["Book a strategy call", "/sales-calendar", "Find the one leak costing you deals."]], "Want weekly accountability?");
   return page({ path: "/free-resources", title: "The Sales Vault: Free Sales Tools | MC Sales Training", desc: "Free dealership sales tools you can run today: Daily Non-Negotiables, the Sales Mini-Book, and Word Tracks & Rebuttals. Delivered instantly.",
     h1: "The Sales Vault", body, crumbs: C(["Free Resources", "/free-resources"]), priority: "0.9" });
 }
@@ -58,14 +58,14 @@ export function dailyNonNegotiables() {
     h1: "Daily Non-Negotiables", body, crumbs: C(["Free Resources", "/free-resources"], ["Daily Non-Negotiables", "/daily-non-negotiables"]), faqs: DN_FAQ, image: "/img/daily-non-negotiables-preview-1200.webp" });
 }
 
-// ── /mini-book ──
+// ── /free-mini-book (the free Sales Mini-Book; GHL form "Mini Book" delivers the PDF; old URL /mini-book redirects here) ──
 const MB_FAQ = [
   ["Is this free?", "Yes. Enter your info and we’ll send the PDF immediately."],
   ["Who is it for?", "Automotive sales professionals who want structure: habits, follow-up standards, and language that prevents price grinding."],
   ["What should I do after I download it?", "Run it exactly for 7 days without customizing it. Then adjust based on what you learn from real results."],
 ];
 export function miniBook() {
-  const body = hero({ kicker: "Free Resources", h1: "Get the Mini-Book", lede: "Get the PDF and run it for 7 days exactly as written.", ctas: [["Send it to me →", "#get"], ["See Programs →", "/program-pricing", "ghost"]], note: "Free • tactical PDF • no fluff",
+  const body = hero({ kicker: "Free Resources", h1: "Get the Free Mini-Book", lede: "Get the PDF and run it for 7 days exactly as written.", ctas: [["Send it to me →", "#get"], ["See Programs →", "/program-pricing", "ghost"]], note: "Free • tactical PDF • no fluff",
     aside: pic("mini-book-preview", [768, 1200], "Free Mini-Book preview", { w: 768, h: 512, sizes: "(min-width: 900px) 460px, 92vw", eager: true, cls: "preview" }) })
   + section("", cards([
     { k: "Start here", t: "Morning routine", d: "Start the day in order so the floor doesn’t run you." },
@@ -75,8 +75,8 @@ export function miniBook() {
   + section("Where should we send your PDF?", `<div class="two"><div><p class="ck">Free mini-book • Tactical PDF</p><p>Enter your info and the PDF is delivered instantly.</p><p class="note">🔒 Locked &amp; private. We hate spam too. Rule: Don’t customize on day one. Run it for 7 days as written.</p><p><a href="/program-pricing">I want training →</a></p></div><div>${ghlForm("minibook", { title: "Mini-Book Registration" })}</div></div>${formEmbedScript}`, { kicker: "Get the PDF", id: "get", soft: true })
   + section("Want accountability and structure?", `<p class="lead-in">Start with the mini-book, then move into a weekly cadence that forces execution.</p>${ctas([["See the 8-Week Challenge →", "/8-week-challenge"], ["Program Pricing →", "/program-pricing", "ghost"]])}`, { kicker: "Next step" })
   + faqBlock(MB_FAQ, "Mini-Book Questions", "Quick clarity before you download.");
-  return page({ path: "/mini-book", title: "Free Sales Mini-Book (PDF) | MC Sales Training", desc: "Download the free MC Sales Training mini-book: a morning routine, follow-up standards and a consistency checklist for dealership salespeople.",
-    h1: "Get the Mini-Book", body, crumbs: C(["Free Resources", "/free-resources"], ["Free Mini-Book", "/mini-book"]), faqs: MB_FAQ, image: "/img/mini-book-preview-1200.webp" });
+  return page({ path: "/free-mini-book", title: "Free Sales Mini-Book (PDF) | MC Sales Training", desc: "Download the free MC Sales Training mini-book: a morning routine, follow-up standards and a consistency checklist for dealership salespeople.",
+    h1: "Get the Free Mini-Book", body, crumbs: C(["Free Resources", "/free-resources"], ["Free Mini-Book", "/free-mini-book"]), faqs: MB_FAQ, image: "/img/mini-book-preview-1200.webp" });
 }
 
 // ── /sales-calendar ──

@@ -54,7 +54,7 @@
     });
   });
 
-  // Home: enroll ($49/week) dialog with the live Stripe Buy Button
+  // Home: enroll ($392) dialog with the live Stripe Buy Button
   var pay = document.getElementById("pay-template");
   $$("[data-enroll]").forEach(function (a) {
     a.addEventListener("click", function (e) {

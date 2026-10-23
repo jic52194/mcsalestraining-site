@@ -20,7 +20,7 @@ const BUILDERS = [
   ["/individual-coaching", individualCoaching], ["/team-training", teamTraining], ["/private-advisory", privateAdvisory], ["/private-sales-advisory", privateSalesAdvisory],
   ["/membership", membership], ["/ai-executive", aiExecutive], ["/courses-on-demand", coursesOnDemand], ["/the-mechanics-of-sales", mechanicsOfSales],
   ["/learn-to-earn", learnToEarn], ["/how-the-system-works", howItWorks], ["/free-resources", freeResources], ["/free-word-tracks", freeWordTracks],
-  ["/daily-non-negotiables", dailyNonNegotiables], ["/mini-book", miniBook], ["/sales-calendar", salesCalendar], ["/get-trained", getTrained],
+  ["/daily-non-negotiables", dailyNonNegotiables], ["/free-mini-book", miniBook], ["/sales-calendar", salesCalendar], ["/get-trained", getTrained],
   ["/dealership-sales-bdc-more-appointments", bdcAppointments], ["/sales-training-built-on-process", builtOnProcess], ["/make-more-money-using-sales", makeMoreMoney],
   ["/about", about], ["/our-philosophy", ourPhilosophy], ["/why-work-with-us", whyWorkWithUs], ["/the-secret-sauce", secretSauce], ["/our-team", ourTeam],
   ["/mark", mark], ["/jared", jared], ["/proof", proof], ["/faq", faq], ["/contact", contact],
@@ -55,7 +55,7 @@ export const LEGACY = {
   "/instructor": "/our-team", "/instructors": "/our-team", "/instructors/mark-casper": "/mark", "/instructors/jared-casper": "/jared",
   "/private-advisory/individuals": "/individual-coaching", "/private-advisory/teams": "/team-training", "/private-advisory/leadership": "/private-advisory",
   "/mechanics-of-sales": "/the-mechanics-of-sales", "/language-of-persuasion": "/learn-to-earn", "/ai-executives": "/ai-executive",
-  "/word-tracks-rebuttals": "/free-word-tracks", "/privacy": "/privacy-policy", "/terms": "/terms-of-service"
+  "/word-tracks-rebuttals": "/free-word-tracks", "/mini-book": "/free-mini-book", "/privacy": "/privacy-policy", "/terms": "/terms-of-service"
 };
 for (const [from, to] of Object.entries(LEGACY)) write(from, redirect(to));
 
@@ -70,17 +70,17 @@ writeFileSync(join(OUT, "llms.txt"), `# MC Sales Training
 ## Key facts
 - Who it is for: dealership salespeople (floor, phone and internet), BDC teams (contact to appointment to show) and sales leaders/managers.
 - Approach: "ethical leverage", not high-pressure closing. Old-school fundamentals (real conversations, control, clarity, ethics) combined with modern execution (speed-to-lead, sequencing, CRM discipline, follow-up).
-- Mark Casper ("The Fundamentals", founder): real dealership floor and finance experience, focused on discovery, trade talk, payments and commitment. Leads the 8-Week Challenge curriculum.
+- Mark Casper ("The Fundamentals", founder): over 40 years of dealership floor and finance experience, focused on discovery, trade talk, payments and commitment. Leads the 8-Week Challenge curriculum.
 - Jared Casper ("The System", co-founder): turns floor experience into a repeatable operating system of word tracks, sequence and daily execution standards. Teaches The Language of Persuasion.
-- Flagship program: the 8-Week Sales Challenge, $49 per week, no contract, cancel anytime, immediate portal access. Covers phone control, text and email follow-up, the daily 10-minute sprint, needs and discovery, objection logic, show rates, pipeline building and a scorecard, with weekly live deal-breakdown coaching and 35 Mark-led lesson videos. Includes a CarSalesSoftware.com tech-stack bonus.
+- Flagship program: the 8-Week Sales Challenge, $392 for the 8-week program, no contract, immediate portal access. Covers phone control, text and email follow-up, the daily 10-minute sprint, needs and discovery, objection logic, show rates, pipeline building and a scorecard, with weekly live deal-breakdown coaching and 35 Mark-led lesson videos. Includes a CarSalesSoftware.com tech-stack bonus.
 - Other programs: Individual Coaching (1:1), Team Training (standardize language and process across a store) and Private Advisory (high-touch, for owners and leaders); pricing for these is handled on a short fit call. Private Sales Advisory "High-Impact" group advisory is $499/month. Premium membership is $20/month. The AI Executive (24/7 AI webchat for dealerships) is $196/month plus AI usage fees.
 - Self-paced courses: The Mechanics of Sales (Mark and Jared; accessed through the MC Sales Training Skool community) and The Language of Persuasion (Jared).
-- Free resources ("Sales Vault"): Daily Non-Negotiables, a Sales Mini-Book, and free word tracks and rebuttals, delivered instantly by email.
+- Free resources ("Sales Vault"): Daily Non-Negotiables, a free Sales Mini-Book (https://mcsalestraining.com/free-mini-book), and free word tracks and rebuttals, delivered instantly by email.
 - No income or results guarantees; results depend on effort, market, inventory and lead flow.
 - Contact: ${EMAIL}; text ${PHONE_TEXT}; call ${PHONE_VANITY}. Responds Monday-Friday, typically within 24 hours on business days. MC Sales Training, LLC, 252 Daniel Webster Hwy #1093, Nashua, NH 03060.
 
 ## Programs
-${L("/", "8-Week Sales Challenge", "Overview, weekly plan, bonus, pricing ($49/week) and FAQ; enroll online.")}
+${L("/", "8-Week Sales Challenge", "Overview, weekly plan, bonus, pricing ($392 for the 8-week program) and FAQ; enroll online.")}
 ${L("/8-week-challenge", "8-Week Challenge curriculum", "The Mark-led 8-week map with 35 lesson videos.")}
 ${L("/8-week-challenge-apply", "Apply for the 8-Week Challenge")}
 ${L("/program-pricing", "Programs overview", "Individual Coaching, Team Training, Private Advisory.")}
@@ -101,7 +101,7 @@ ${L("/how-the-system-works", "How the system works")}
 ${L("/free-resources", "The Sales Vault")}
 ${L("/free-word-tracks", "Free word tracks & rebuttals")}
 ${L("/daily-non-negotiables", "Daily non-negotiables")}
-${L("/mini-book", "Sales mini-book")}
+${L("/free-mini-book", "Free sales mini-book", "Free PDF: a morning routine, follow-up standards and a consistency checklist, sent by email.")}
 ${L("/sales-calendar", "Book a free strategy call")}
 
 ## About
