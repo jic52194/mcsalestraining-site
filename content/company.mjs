@@ -1,5 +1,5 @@
 // Company pages: About, Our Philosophy, Why Work With Us, The Secret Sauce, Our Team, Mark, Jared, Proof, FAQ, Contact.
-import { page, hero, section, cards, bullets, steps, faqBlock, related, ghlForm, formEmbedScript, pic, ctas, SITE, EMAIL, PHONE_TEXT, PHONE_TEL, PHONE_VANITY, SKOOL } from "../scripts/lib.mjs";
+import { page, hero, section, cards, bullets, steps, faqBlock, related, ghlForm, formEmbedScript, pic, ctas, nextStep, CTA, ghost, SITE, EMAIL, PHONE_TEXT, PHONE_TEL, PHONE_VANITY, SKOOL } from "../scripts/lib.mjs";
 
 const C = (...c) => [["Home", "/"], ...c];
 
@@ -16,7 +16,8 @@ export function about() {
     { k: "Mechanism", t: "Word Tracks", d: "Scripts tied to exact moments—opening → discovery → transition → next step." },
     { k: "Mechanism", t: "Follow-Up Cadence", d: "Copy/paste structure that earns replies and protects next steps." },
     { k: "Execution", t: "Daily Standards", d: "Non-negotiables + accountability so results don’t depend on motivation." }]), { kicker: "Credibility", soft: true })
-  + section("Ready to Install the System?", `<p class="lead-in">Start with the Vault: free word tracks, follow-up cadence, and daily standards you can run for 7 days.</p>${ctas([["Get Free Word Tracks →", "/free-resources"], ["Compare Programs →", "/program-pricing", "ghost"]])}`, { kicker: "Next step", center: true });
+  + nextStep({ h2: "Ready to Install the System?", lead: "Start with the Vault: free word tracks, follow-up cadence, and daily standards you can run for 7 days.", ctas: [CTA.free, ghost(CTA.programs)],
+    links: [["Our philosophy: sales is mechanical", "/our-philosophy", "Logic over charisma, the quiet professional."], ["Why work with us: ethical leverage", "/why-work-with-us", "Process, not high-pressure closing."], ["Meet Mark & Jared Casper", "/our-team", "Fundamentals plus system architecture."]] });
   return page({ path: "/about", title: "About MC Sales Training | Dealership Sales & BDC Training", desc: "MC Sales Training is dealership sales training built for real conversations: openings, discovery, next-step control and follow-up by Mark & Jared Casper.",
     h1: "Dealership Sales Training Built for Real Conversations.", body, crumbs: C(["About", "/about"]), priority: "0.8" });
 }
@@ -80,7 +81,9 @@ export function ourTeam() {
   const body = hero({ kicker: "Our Team", h1: "Decades of Floor Experience.", lede: "A team built on fundamentals, modern psychology, and the discipline of repeatable execution.", ctas: [["About the Company", "/about"], ["Contact", "/contact", "ghost"]] })
   + section("", `<div class="two"><div class="panel person">${pic("mark-casper", [480, 800], "Mark Casper", { w: 480, h: 480, sizes: "220px" })}<div><h2>Mark Casper</h2><p class="ck">Founder • Fundamentals</p><p>Mark has over 40 years across automotive and finance. Mark teaches the fundamentals that never go out of style—so results stop being random.</p>${ctas([["Read Mark’s Story →", "/mark"], ["Get Free Word Tracks →", "/free-resources", "ghost"]])}</div></div>
 <div class="panel person">${pic("jared-casper", [480, 800], "Jared Casper", { w: 480, h: 480, sizes: "220px" })}<div><h2>Jared Casper</h2><p class="ck">Co-Founder • System Architecture</p><p>Jared focuses on structure and buyer behavior—turning real floor lessons into a repeatable operating system that survives pressure.</p>${ctas([["Read Jared’s Story →", "/jared"], ["Compare Programs →", "/program-pricing", "ghost"]])}</div></div></div>`, { soft: true })
-  + section("We’re always looking for serious operators.", `<p class="lead-in">If you care about process, standards, and measurable outcomes, we want to hear from you.</p><p>Partnership, hiring, media, or collaboration: use the <a href="/contact">contact page</a> and include “Team” in the subject line.</p>${ctas([["Contact Us →", "/contact"], ["Learn More →", "/about", "ghost"]])}`, { kicker: "Join our team" });
+  + section("We’re always looking for serious operators.", `<p class="lead-in">If you care about process, standards, and measurable outcomes, we want to hear from you.</p><p>Partnership, hiring, media, or collaboration: use the <a href="/contact">contact page</a> and include “Team” in the subject line.</p>${ctas([["Contact Us →", "/contact"], ["Learn More →", "/about", "ghost"]])}`, { kicker: "Join our team" })
+  + nextStep({ h2: "Train with Mark & Jared", ctas: [["See the 8-Week Challenge →", "/8-week-challenge"], ghost(CTA.free)],
+    links: [["Mark Casper", "/mark", "Founder; leads the 8-Week Challenge curriculum."], ["Jared Casper", "/jared", "Co-founder; teaches The Language of Persuasion."], ["The father–son advantage", "/the-secret-sauce", "Old-school fundamentals plus modern systems."]] });
   return page({ path: "/our-team", title: "Our Team: Mark & Jared Casper | MC Sales Training", desc: "Meet the MC Sales Training coaches: Mark Casper on fundamentals and Jared Casper on system architecture, built on decades of floor experience.",
     h1: "Decades of Floor Experience.", body, crumbs: C(["About", "/about"], ["Our Team", "/our-team"]), priority: "0.7" });
 }
@@ -90,14 +93,15 @@ const PERSON_FAQ = (verb) => [
   ["What should I do first?", `Start with <a href="/free-resources">Free Resources</a>. Pick one tool to use today, then ${verb} <a href="/program-pricing">Program Pricing</a> when you want structure and accountability.`],
   ["Do you offer team training?", "Yes. Contact us with your rep count and goals and we’ll recommend the best setup."],
 ];
-const person = ({ slug, name, job, lede, chips, h2, intro, para, teach, teaches, first, firstList, mgrT, mgrD, verb, desc, title, knows, sameAs }) => {
+const person = ({ slug, name, job, lede, chips, h2, intro, para, teach, teaches, first, firstList, mgrT, mgrD, verb, desc, title, knows, sameAs, next }) => {
   const faqs = PERSON_FAQ(verb);
   const body = hero({ kicker: "Our Team", h1: name, lede, ctas: [["Get Free Word Tracks →", "/free-resources"], ["Compare Programs →", "/program-pricing", "ghost"]],
     aside: pic(slug, [480, 800], name, { w: 480, h: 480, sizes: "(min-width: 900px) 380px, 80vw", eager: true, cls: "preview" }) })
   + section(h2, `<p class="lead-in">${intro}</p><ul class="chips">${chips.map((c) => `<li>${c}</li>`).join("")}</ul><p style="margin-top:16px">${para}</p>`, { kicker: `About ${name.split(" ")[0]}` })
-  + section(`What ${name.split(" ")[0]} Teaches`, `<p class="lead-in">${teach}</p>` + cards(teaches) + ctas([["Get Free Word Tracks →", "/free-resources"], ["Our Philosophy", "/why-work-with-us", "ghost"], ["Back to Our Team", "/our-team", "ghost"]]), { kicker: "Focus", soft: true })
+  + section(`What ${name.split(" ")[0]} Teaches`, `<p class="lead-in">${teach}</p>` + cards(teaches) + ctas([["Get Free Word Tracks →", "/free-resources"], ["Our Philosophy", "/our-philosophy", "ghost"], ["Back to Our Team", "/our-team", "ghost"]]), { kicker: "Focus", soft: true })
   + section("", `<div class="two"><div class="panel"><p class="ck">Best first step</p><h3>${first[0]}</h3><p>${first[1]}</p><ol>${firstList.map((x) => `<li>${x}</li>`).join("")}</ol></div><div class="panel"><p class="ck">${mgrT[0]}</p><h3>${mgrT[1]}</h3><p>${mgrD}</p>${ctas([["Talk to Us", "/contact"], ["Compare Programs →", "/program-pricing", "ghost"]])}</div></div>`)
-  + faqBlock(faqs, "Quick Answers", "A few common questions about getting started.");
+  + faqBlock(faqs, "Quick Answers", "A few common questions about getting started.")
+  + nextStep(next);
   return page({ path: "/" + slug.split("-")[0], title, desc, h1: name, body, crumbs: C(["Our Team", "/our-team"], [name, "/" + slug.split("-")[0]]), faqs, image: `/img/${slug}-800.webp`,
     schema: [{ "@context": "https://schema.org", "@type": "Person", "@id": `${SITE}/${slug.split("-")[0]}#person`, name, jobTitle: job, url: `${SITE}/${slug.split("-")[0]}`, image: `${SITE}/img/${slug}-800.webp`, worksFor: { "@id": `${SITE}/#org` }, knowsAbout: knows, ...(sameAs ? { sameAs } : {}) }] });
 };
@@ -110,6 +114,7 @@ export const mark = () => person({ slug: "mark-casper", name: "Mark Casper", job
     { k: "Next Steps", t: "Move the Deal Forward", d: "Reduce stalls by making every step clear, earned, and easy to agree to." }],
   first: ["Start With the Free Framework", "Before you pay for anything, install the baseline habits and language."], firstList: ["Grab the free tools and pick one to use today.", "Watch the foundation modules to tighten your process.", "Upgrade when you want coaching and accountability."],
   mgrT: ["If you’re a manager", "Standardize the Store"], mgrD: "If you want process consistency across reps, we can help you roll out a clean framework store-wide.", verb: "review",
+  next: { h2: "Learn from Mark", ctas: [["See the 8-Week Challenge →", "/8-week-challenge"], ghost(CTA.free)], links: [["The 8-week curriculum", "/8-week-challenge#curriculum", "35 Mark-led lesson videos, week by week."], ["Jared Casper", "/jared", "The system side: word tracks, sequence, standards."], ["The father–son advantage", "/the-secret-sauce", "Fundamentals plus modern systems."]] },
   title: "Mark Casper | MC Sales Training", desc: "Mark Casper brings over 40 years of dealership experience: control the first 60 seconds, find the real motive and move the deal forward.",
   knows: ["dealership sales", "automotive finance", "sales management", "objection handling"], sameAs: ["https://www.facebook.com/mark.casper.927"] });
 export const jared = () => person({ slug: "jared-casper", name: "Jared Casper", job: "Co-Founder, MC Sales Training", lede: "Modern buyer psychology and process architecture—built for repeatable execution.", h2: "Structure Turns Talent Into Results.",
@@ -121,6 +126,7 @@ export const jared = () => person({ slug: "jared-casper", name: "Jared Casper", 
     { k: "Systems", t: "Repeatability", d: "Turn good days into consistent weeks by tightening the middle of the deal." }],
   first: ["Install the Baseline System", "Start free, learn the framework, then upgrade when you want coaching and accountability."], firstList: ["Choose one free tool and apply it today.", "Standardize your opening and transitions.", "Upgrade to build consistency and close more reliably."],
   mgrT: ["If you’re building a team", "Standardize Language Store-Wide"], mgrD: "If you’re a manager/owner, we can help you implement a unified process that survives staffing changes.", verb: "explore",
+  next: { h2: "Learn from Jared", ctas: [["See The Language of Persuasion →", "/learn-to-earn"], ghost(CTA.free)], links: [["The Mechanics of Sales", "/the-mechanics-of-sales", "Mark + Jared’s self-paced course."], ["Mark Casper", "/mark", "The fundamentals side: over 40 years on the floor."], ["The father–son advantage", "/the-secret-sauce", "Fundamentals plus modern systems."]] },
   title: "Jared Casper | MC Sales Training", desc: "Jared Casper turns floor experience into a repeatable system: buyer psychology, conversation design and execution standards that reduce stalls.",
   knows: ["buyer psychology", "sales process design", "CRM follow-up systems", "sales automation"], sameAs: ["https://www.linkedin.com/in/jaredcasper94/"] });
 
@@ -183,7 +189,8 @@ export function faq() {
     ctas: [["Get Free Word Tracks →", "/free-resources"], ["Book a Fit Call →", "/sales-calendar", "ghost"]] })
   + `<div class="wrap"><nav aria-label="FAQ sections"><ul class="chips" style="margin-top:18px">${FAQ_GROUPS.map(([id, t]) => `<li><a href="#${id}">${t}</a></li>`).join("")}</ul></nav></div>`
   + FAQ_GROUPS.map(([id, t, k, items], i) => section(t, `<div class="faq">${items.map(([q, a]) => `<details${i === 0 ? " open" : ""}><summary>${q}</summary><div class="ans">${a.startsWith("<") ? a : `<p>${a}</p>`}</div></details>`).join("")}</div>`, { kicker: k, id, soft: i % 2 === 1 })).join("")
-  + section("Get a simple plan for the next 7 days.", `<p class="lead-in">If you tell us where the breakdown is (contact, appointments, shows, closes, follow-up), we’ll recommend the smallest fix that produces the fastest win.</p>${ctas([["Book a Fit Call →", "/sales-calendar"], ["Get Free Word Tracks →", "/free-resources", "ghost"]], "No pressure. Just clarity on what to run next.")}`, { kicker: "Still stuck?", center: true, soft: true });
+  + section("Get a simple plan for the next 7 days.", `<p class="lead-in">If you tell us where the breakdown is (contact, appointments, shows, closes, follow-up), we’ll recommend the smallest fix that produces the fastest win.</p>${ctas([["Book a Fit Call →", "/sales-calendar"], ["Get Free Word Tracks →", "/free-resources", "ghost"]], "No pressure. Just clarity on what to run next.")}`, { kicker: "Still stuck?", center: true, soft: true })
+  + nextStep({ h2: "Guides", soft: false, links: [["Stop losing gross to “I need to think about it”", "/get-trained", "Openings, discovery, follow-up and a daily plan."], ["Dealership Sales & BDC: more appointments", "/dealership-sales-bdc-more-appointments", "Word tracks, next-step control and follow-up for Sales + BDC."], ["How the System Works", "/how-the-system-works", "Structure, language and habits."]] });
   return page({ path: "/faq", title: "FAQ | MC Sales Training", desc: "Answers about MC Sales Training: who it’s for, programs and pricing, daily accountability, courses on demand, private advisory and policies.",
     h1: "FAQ", body, crumbs: C(["FAQ", "/faq"]), faqs: all, priority: "0.8" });
 }
@@ -203,7 +210,9 @@ export function contact() {
 <ul class="checks"><li>Email <a href="mailto:${EMAIL}">${EMAIL}</a></li><li>Text <a href="sms:${PHONE_TEL}">${PHONE_TEXT}</a></li><li>Call <a href="tel:${PHONE_TEL}">${PHONE_VANITY}</a></li></ul><p class="small">Typical response time: within 24 hours on business days.</p>
 <p><a href="/free-resources">Free Resources</a> · <a href="/faq">FAQ</a> · <a href="/program-pricing">Program Pricing</a> · <a href="/sales-calendar">Book a strategy call</a></p></div>
 <div id="mcFormSection"><p class="ck">Message us</p><h2>Send a Quick Note</h2><p>Share the basics and we’ll route it correctly. Prefer email? Use <a href="mailto:${EMAIL}">${EMAIL}</a>.</p>${ghlForm("contact", { title: "Contact MC Sales Training" })}</div></div>${formEmbedScript}`)
-  + faqBlock(CT_FAQ, "Quick Answers", "A few common questions we receive.");
+  + faqBlock(CT_FAQ, "Quick Answers", "A few common questions we receive.")
+  + nextStep({ h2: "Rather talk it through?", lead: "Book a fit call and bring one real scenario: a stalled deal, an objection or a follow-up thread.", ctas: [CTA.call, ghost(CTA.free)],
+    links: [["FAQ", "/faq", "Programs, pricing, accountability and policies."], ["Compare programs", "/program-pricing", "Coaching, team training and advisory."], ["Our team", "/our-team", "Mark and Jared Casper."]] });
   return page({ path: "/contact", title: "Contact MC Sales Training", desc: "Email support@mcsalestraining.com or text 1-240-628-7246. We respond Monday–Friday, typically within 24 hours on business days.",
     h1: "Contact", body, crumbs: C(["Contact", "/contact"]), faqs: CT_FAQ, priority: "0.8",
     schema: [{ "@context": "https://schema.org", "@type": "ContactPage", url: SITE + "/contact", name: "Contact MC Sales Training", about: { "@id": `${SITE}/#org` } }] });
