@@ -43,6 +43,20 @@ export const BOOKING = { src: `${FORM_HOST}/widget/booking/QW4prYPBrGG4cWTGiqbF`
 export const BOOKING_AI = { src: "https://link.casperportal.net/widget/booking/QW4prYPBrGG4cWTGiqbF", title: "MC Sales Training Booking Calendar" };
 export const STRIPE = { buyButtonId: "buy_btn_1SvzjHLxNPxBXAaWICbr71M1", publishableKey: "pk_live_51NyRtwLxNPxBXAaWv6AvvBjBAoNLwO7DXI1ii2II3JlmMGobHGltpXRzF0YnhZ7NhwQqpgbpqboTdK9hEXS2Sxed00cA39Gjkp" };
 
+// Google Fonts load without blocking first paint (each CSS font stack already has system fallbacks).
+const FONTS = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@700;800&amp;family=Oswald:wght@600;700&amp;display=swap";
+
+/** The site's primary calls to action, one label each (matches the header: "Book a Fit Call" / "Get Free Word Tracks"). Tuples for btn()/ctas(). */
+export const CTA = {
+  enroll: ["Enroll for $392 →", "/#enroll", "", "data-enroll"], // opens the Stripe Buy Button dialog (app.js); without JS it goes to the home page enroll section
+  call: ["Book a Fit Call →", "/sales-calendar"],
+  free: ["Get Free Word Tracks →", "/free-resources"],
+  programs: ["Compare Programs →", "/program-pricing"],
+};
+export const ghost = (c) => [c[0], c[1], "ghost", c[3] || ""];
+/** The 8-Week Challenge checkout (live Stripe Buy Button), opened in a dialog by any [data-enroll] link (app.js). page() adds it to any page with one. */
+export const payTemplate = `<template id="pay-template"><div class="paybox"><p>Coaching + Training + Bonus Tech Stack</p><p class="price">$392</p><p class="small">for the 8-week program</p><stripe-buy-button buy-button-id="${STRIPE.buyButtonId}" publishable-key="${STRIPE.publishableKey}"></stripe-buy-button><p class="small">Immediate access to portal &amp; bonus tech</p></div></template>`;
+
 export const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 export const ld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`;
 const strip = (h) => String(h).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
@@ -86,7 +100,7 @@ const navHtml = (path) => NAV.map(([n, v]) => typeof v === "string"
 const drawerHtml = () => NAV.map(([n, v]) => typeof v === "string" ? `<a href="${v}">${esc(n)}</a>` : `<p class="dh">${esc(n)}</p>${v.map(([a, h]) => `<a href="${h}">${esc(a)}</a>`).join("")}`).join("");
 
 /** The page shell. crumbs = [[name, path]...] adds a visible breadcrumb + BreadcrumbList. faqs = [[q, a]...] adds FAQPage. */
-export function page({ path, title, desc, body, h1, answer = ANSWERS[path], crumbs, faqs, schema = [], noindex = false, theme = "", image, priority = "0.7", preload = "", head = "" }) {
+export function page({ path, title, desc, body, h1, answer = ANSWERS[path], crumbs, faqs, schema = [], noindex = false, theme = "", image, priority = "0.7", preload = "", head = "", sticky }) {
   if (title.length > 60) throw new Error(`title > 60 chars on ${path}: ${title} (${title.length})`);
   if (desc.length > 155 || desc.length < 50) throw new Error(`description length ${desc.length} on ${path}`);
   const url = SITE + (path === "/" ? "/" : path);
@@ -100,6 +114,10 @@ export function page({ path, title, desc, body, h1, answer = ANSWERS[path], crum
   if (!noindex && !answer) throw new Error(`${path} has no answer-first sentence in content/answers.mjs`);
   // Answer-first: the first paragraph after the H1 opens with what the page is and who it is for.
   if (answer) body = body.replace(/(<\/h1>\s*)(<p class="lede">)?/, (m, end, lede) => lede ? `${end}<p class="lede">${answer} ` : `${end}<p class="lede">${answer}</p>`);
+  // sticky = [text, ctaTuple]: a bar fixed to the bottom of phone screens (same component as the home page's enroll bar)
+  if (sticky) body += `<div class="sticky-enroll"><span>${sticky[0]}</span>${btn([sticky[1][0], sticky[1][1], "sm", sticky[1][3] || ""])}</div>`;
+  // any Enroll button (data-enroll) opens the same Stripe Buy Button dialog as the home page
+  if (/data-enroll/.test(body) && !/id="pay-template"/.test(body)) body += payTemplate;
   const h1count = (body.match(/<h1[\s>]/g) || []).length;
   if (h1count !== 1) throw new Error(`${path} has ${h1count} h1 elements`);
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -108,10 +126,10 @@ export function page({ path, title, desc, body, h1, answer = ANSWERS[path], crum
 <meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="en_US"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${esc(image ? title : "MC Sales Training logo")}">
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${img}"><meta name="theme-color" content="#0a2463">
 <link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@700;800&amp;family=Oswald:wght@600;700&amp;display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="${FONTS}">
 <link rel="stylesheet" href="/assets/site.css?v=${TODAY}">${preload}${head}
 ${schemas.map(ld).join("")}
-</head><body${theme ? ` class="${theme}"` : ""}>
+</head><body${theme || sticky ? ` class="${[theme, sticky ? "has-sticky" : ""].filter(Boolean).join(" ")}"` : ""}>
 <a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap"><span>Dealership Sales + BDC: More Appointments • More Closes • Better Grosses</span> <a href="/free-resources">Free Word Tracks &amp; Follow-Up Tools</a></div></div>
 <header class="top"><div class="wrap row">
@@ -153,6 +171,9 @@ export const steps = (items) => `<ol class="steps">${items.map(([t, d]) => `<li>
 export const faqBlock = (items, h2 = "Common Questions", lead = "", id = "faq") => section(h2, `<div class="faq">${items.map(([q, a]) => `<details><summary>${q}</summary><div class="ans">${a.startsWith("<") ? a : `<p>${a}</p>`}</div></details>`).join("")}</div>`, { lead, id, soft: true });
 export const quote = (q, who) => `<figure class="quote"><blockquote><p>${q}</p></blockquote>${who ? `<figcaption>${who}</figcaption>` : ""}</figure>`;
 export const related = (items, h2 = "Keep building the system") => section(h2, `<ul class="related">${items.map(([t, h, d]) => `<li><a href="${h}">${t}</a>${d ? `<span>${d}</span>` : ""}</li>`).join("")}</ul>`, { id: "related" });
+
+/** End-of-page "next step": a primary CTA (+ optional secondary), a short note of facts already on the site, and related pages with descriptive anchors. */
+export const nextStep = ({ h2 = "Your next step", lead = "", ctas: c = [], note = "", links = [], soft = true }) => section(h2, `${lead ? `<p class="lead-in">${lead}</p>` : ""}${c.length ? ctas(c, note) : note ? `<p class="note">${note}</p>` : ""}${links.length ? `<ul class="related" style="margin-top:22px">${links.map(([t, h, d]) => `<li><a href="${h}">${t}</a>${d ? `<span>${d}</span>` : ""}</li>`).join("")}</ul>` : ""}`, { kicker: "Next step", id: "next-step", soft });
 
 /** A GoHighLevel form embed (same iframe + form_embed.js the live site uses). Lazy: the iframe src loads when scrolled near. */
 export const ghlForm = (key, { title, id } = {}) => {

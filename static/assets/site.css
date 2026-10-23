@@ -136,7 +136,7 @@ body.dark-home{background:var(--dark);color:#e2e8f0}
 .pricecard .price{font:700 3rem/1 var(--o);color:#fff;margin:6px 0}
 .sticky-enroll{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(7,10,18,.96);border-top:1px solid rgba(255,255,255,.12);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;font-weight:700}
 @media(min-width:900px){.sticky-enroll{display:none}}
-.dark-home .foot{padding-bottom:90px}@media(min-width:900px){.dark-home .foot{padding-bottom:26px}}
+.dark-home .foot,.has-sticky .foot{padding-bottom:90px}@media(min-width:900px){.dark-home .foot,.has-sticky .foot{padding-bottom:26px}}
 .paybox{text-align:center}.paybox .price{font:700 3.2rem/1 var(--o);color:var(--ink)}.paybox stripe-buy-button{display:block;margin:14px auto 6px;min-height:60px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
