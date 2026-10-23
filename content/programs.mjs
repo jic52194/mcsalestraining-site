@@ -1,6 +1,8 @@
 // Programs: 8-Week Challenge (overview + apply), Program Pricing, Individual Coaching, Team Training, Private Advisory,
 // Private Sales Advisory, Membership, AI Executive. Copy is the live site's wording.
-import { page, hero, section, cards, bullets, steps, faqBlock, quote, related, ghlForm, formEmbedScript, formButton, bookingEmbed, BOOKING_AI, yt, ctas, SITE, EMAIL } from "../scripts/lib.mjs";
+import { page, hero, section, cards, bullets, steps, faqBlock, quote, related, ghlForm, formEmbedScript, formButton, bookingEmbed, BOOKING_AI, yt, ctas, nextStep, CTA, ghost, SITE, EMAIL } from "../scripts/lib.mjs";
+const APPLY = ["Apply / Join the Challenge", "/8-week-challenge-apply", "ghost"];
+const ENROLL_NOTE = "$392 for the 8-week program • no contracts • immediate portal access • weekly intake capped at 25 seats";
 
 const C = (...c) => [["Home", "/"], ...c];
 const course = (path, name, description, extra = {}) => ({ "@context": "https://schema.org", "@type": "Course", name, description, url: SITE + path, provider: { "@type": "EducationalOrganization", "@id": `${SITE}/#org`, name: "MC Sales Training", url: SITE + "/" }, ...extra });
@@ -28,7 +30,7 @@ export function challenge() {
   const total = LESSONS.reduce((n, w) => n + w[2].length, 0);
   const body = hero({ kicker: "Mark Casper led • 8-week execution system", h1: "Build consistent sales habits in 8 weeks — with a weekly structure your team actually runs.",
     lede: "Weekly videos + coaching cadence + scripts/word-tracks + roleplay prompts — organized into an 8-week map so floor + BDC always know what to run next.",
-    ctas: [["Apply / Join the Challenge", "/8-week-challenge-apply"], ["See the week-by-week map", "#curriculum", "ghost"]],
+    ctas: [CTA.enroll, APPLY, ["See the week-by-week map", "#curriculum", "ghost"]],
     note: "Takes ~60 seconds • $392 for the 8-week program • Built for floor reps, BDC/Internet reps, and desk/BDC managers",
     chips: ["Mark Casper led", "Week-by-week curriculum (not “tips”)", `${total} lesson videos`, "Weekly cadence installed"] })
   + section("Who it’s for, what it fixes, and what you’ll run each week.", `<div class="cards c2">
@@ -41,7 +43,7 @@ export function challenge() {
 <div class="panel"><h3>Join the 8-Week Challenge</h3><p>A week-by-week operating system you run: habits, follow-up discipline, qualifying, commitment, objections, and professionalism — with scripts + roleplay prompts to keep execution consistent.</p>
 <p class="price">$392</p><p class="small">For the 8-week program (see enrollment for details)</p>
 ${bullets(["Cap: 25 seats per weekly intake", "Includes: videos + cadence + scripts + prompts", "Support included: CarSalesSoftware.com support (Mon–Fri) + monthly CRM group coaching (last Friday each month)"])}
-${ctas([["Apply / Join", "/8-week-challenge-apply"], ["Talk to us first", "/sales-calendar", "ghost"]])}<p class="note">Not ready yet? <a href="/free-resources">Start with Free Resources →</a></p></div></div></div>`, { id: "watch" })
+${ctas([CTA.enroll, ["Apply / Join", "/8-week-challenge-apply", "ghost"], ghost(CTA.call)])}<p class="note">Not ready yet? <a href="/free-resources">Start with Free Resources →</a></p></div></div></div>`, { id: "watch" })
   + section("Everything needed to make daily activity non-negotiable.", cards([
     { t: "8-week curriculum map", d: "Run the right focus this week (not “everything at once”)." }, { t: "Weekly Mark-led videos", d: "Short lessons tied to real floor/BDC moments." },
     { t: "Coaching cadence guidance", d: "Manager rhythm for consistency and accountability." }, { t: "Scripts / word-tracks", d: "Qualifying, commitment, objections, and follow-up." },
@@ -51,9 +53,10 @@ ${ctas([["Apply / Join", "/8-week-challenge-apply"], ["Talk to us first", "/sale
 <div class="panel" style="margin-top:18px"><h3>What Mark focuses on</h3><p>Mark teaches the floor: habits, investigation, commitment, turnover, and follow-up—built to create consistent performance. This isn’t theory. It’s the weekly execution sequence—what to do, what to say, and how to stop drifting so your results stabilize.</p>
 ${bullets(["Weeks 1–2: Habit reconstruction + daily cadence.", "Weeks 3–4: Investigation (finding the decision drivers and money).", "Weeks 5–6: Commitment + numbers (no more price fights).", "Weeks 7–8: Turnover + follow-up (residual + referrals)."])}<p>Read more about <a href="/mark">Mark Casper</a>.</p></div>`, { kicker: "Curriculum • Habits → Relationships → Process → Qualifying → Deal → Objections → Professionalism → Final", id: "curriculum", soft: true })
   + faqBlock(CH_FAQ, "Quick clarity before you apply.", "No fluff — just what you need to decide.")
-  + section("", ctas([["Apply / Join the Challenge", "/8-week-challenge-apply"], ["Compare Programs →", "/program-pricing", "ghost"]], "60 seconds • $392 for the 8-week program • Weekly intake capped at 25 seats"), { center: true });
+  + nextStep({ h2: "Ready to run the 8-week cadence?", lead: "Enroll and start this week’s focus, or apply first if you want to talk it through.", ctas: [CTA.enroll, APPLY], note: ENROLL_NOTE,
+    links: [["Meet Mark Casper", "/mark", "He leads the 8-Week Challenge curriculum."], ["Daily Non-Negotiables (free)", "/daily-non-negotiables", "A one-page first-hour routine you can run today."], ["Compare all programs", "/program-pricing", "Individual coaching, team training and advisory."]] });
   return page({ path: "/8-week-challenge", title: "8-Week Challenge Curriculum | MC Sales Training", desc: "The Mark Casper-led 8-week map: 35 lesson videos, scripts, roleplay prompts and a coaching cadence for floor and BDC. $392 for 8 weeks.",
-    h1: "Build consistent sales habits in 8 weeks", body, crumbs: C(["Programs", "/program-pricing"], ["8-Week Challenge", "/8-week-challenge"]), faqs: CH_FAQ, priority: "0.9",
+    h1: "Build consistent sales habits in 8 weeks", body, crumbs: C(["Programs", "/program-pricing"], ["8-Week Challenge", "/8-week-challenge"]), faqs: CH_FAQ, priority: "0.9", sticky: ["$392 • 8-week program", ["Enroll →", "/#enroll", "", "data-enroll"]],
     schema: [course("/8-week-challenge", "8-Week Challenge", "Mark Casper-led 8-week execution system with weekly video lessons, scripts and roleplay prompts for dealership floor and BDC reps.", { offers: { "@type": "Offer", price: "392", priceCurrency: "USD", description: "$392 for the 8-week program", url: SITE + "/8-week-challenge-apply" }, hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", instructor: { "@type": "Person", name: "Mark Casper", url: SITE + "/mark" } } })] });
 }
 
@@ -103,9 +106,11 @@ export function programPricing() {
     { t: "8-Week Challenge", d: "A structured sprint with weekly live coaching. $392 for the 8-week program.", cta: ["See the Challenge →", "/8-week-challenge"] },
     { t: "Courses On Demand", d: "Self-paced: The Mechanics of Sales and The Language of Persuasion.", cta: ["Browse Courses →", "/courses-on-demand"] },
     { t: "Membership", d: "Community and membership levels, from free Vault access to VIP Advisory.", cta: ["See Membership →", "/membership"] }]), { soft: true })
-  + faqBlock(PP_FAQ);
+  + faqBlock(PP_FAQ)
+  + nextStep({ h2: "Not sure which path fits?", lead: "Book a short fit call. We’ll diagnose your bottleneck and recommend the simplest next step—whether that’s coaching, a program, or just free tools.", ctas: [CTA.call, ghost(CTA.free)], note: "No pressure. If it’s not a fit, we’ll tell you.",
+    links: [["How the system works", "/how-the-system-works", "Word tracks, sequence and daily habits."], ["What we track first", "/proof", "Appointment quality, close rate, gross."], ["Sales & BDC: more appointments", "/dealership-sales-bdc-more-appointments", "The free tools and the paths, on one page."]] });
   return page({ path: "/program-pricing", title: "Sales, BDC & Leadership Programs | MC Sales Training", desc: "Compare Individual Coaching, Team Training and Private Advisory for dealership Sales, BDC and leaders. Pricing and fit are set on a short call.",
-    h1: "Dealership Sales, BDC & Leadership Programs", body, crumbs: C(["Programs", "/program-pricing"]), faqs: PP_FAQ, priority: "0.9" });
+    h1: "Dealership Sales, BDC & Leadership Programs", body, crumbs: C(["Programs", "/program-pricing"]), faqs: PP_FAQ, priority: "0.9", sticky: ["Not sure which path fits?", CTA.call] });
 }
 
 // ── /individual-coaching ──
@@ -126,9 +131,10 @@ export function individualCoaching() {
     { k: "Sequence", t: "Follow-Up Cadence", d: "A repeatable plan for day 0–7 and long-cycle follow-up that earns replies." },
     { k: "Standards", t: "Daily Non-Negotiables", d: "Activity standards that force momentum and give you a scoreboard. Get the free <a href=\"/daily-non-negotiables\">one-page routine</a>." }]), { kicker: "Deliverables" })
   + faqBlock(IC_FAQ)
-  + section("", ctas([["Book a Fit Call →", "/sales-calendar"], ["Get Free Word Tracks →", "/free-resources", "ghost"], ["Compare Programs →", "/program-pricing", "ghost"]]), { center: true });
+  + nextStep({ h2: "Find your bottleneck first", lead: "Bring one real deal or follow-up thread to a fit call and leave with the next move.", ctas: [CTA.call, ghost(CTA.free)], note: "No pressure. If it’s not a fit, we’ll tell you.",
+    links: [["Team Training", "/team-training", "Run the same playbook across the store."], ["8-Week Challenge", "/8-week-challenge", "A structured sprint: $392 for 8 weeks."], ["Compare all programs", "/program-pricing", "Coaching, team training and advisory."]] });
   return page({ path: "/individual-coaching", title: "Individual Dealership Sales Coaching | MC Sales Training", desc: "1:1 coaching for dealership sales and BDC reps: word tracks, follow-up cadence and daily standards to set more appointments and protect gross.",
-    h1: "Individual Coaching for Dealership Sales & BDC Execution", body, crumbs: C(["Programs", "/program-pricing"], ["Individual Coaching", "/individual-coaching"]), faqs: IC_FAQ, priority: "0.8" });
+    h1: "Individual Coaching for Dealership Sales & BDC Execution", body, crumbs: C(["Programs", "/program-pricing"], ["Individual Coaching", "/individual-coaching"]), faqs: IC_FAQ, priority: "0.8", sticky: ["1:1 coaching", CTA.call] });
 }
 
 // ── /team-training ──
@@ -149,9 +155,10 @@ export function teamTraining() {
     { k: "Execution", t: "Accountability", d: "Daily non-negotiables and scoreboards so managers can coach what they can see.", list: ["Daily activity standards", "Appointment + show visibility", "Weekly coaching rhythm"] }]) + ctas([["Book a Fit Call →", "/sales-calendar"], ["How the System Works →", "/how-the-system-works", "ghost"]], "If it’s not a fit, we’ll tell you."), { kicker: "What’s included", soft: true })
   + section("Install. Practice. Normalize.", `<p class="lead-in">You don’t need more meetings. You need a cadence the store can actually keep running.</p>${steps([["Align", "Define standards, roles, and what “done” looks like (Sales, BDC, managers)."], ["Install", "Put word tracks + sequence into the day-to-day, with reps and call review."], ["Coach", "Managers run scoreboards and coach the same way every week."]])}${ctas([["Book a Fit Call →", "/sales-calendar"], ["Get Free Word Tracks →", "/free-resources", "ghost"]])}`, { kicker: "Rollout" })
   + faqBlock(TT_FAQ)
-  + related([["Private Advisory", "/private-advisory", "For owners and leadership teams."], ["Proof / Results", "/proof", "What we track and tighten first."], ["8-Week Challenge", "/8-week-challenge", "A weekly cadence floor + BDC can run."]]);
+  + nextStep({ h2: "Standardize the store", lead: "Start with a fit call: we’ll diagnose the bottleneck and recommend the simplest next step for the store.", ctas: [CTA.call, ghost(CTA.programs)], note: "If it’s not a fit, we’ll tell you.",
+    links: [["Private Advisory", "/private-advisory", "For owners and leadership teams."], ["Proof / Results", "/proof", "What we track and tighten first."], ["Sales & BDC: more appointments", "/dealership-sales-bdc-more-appointments", "Word tracks and follow-up for Sales + BDC."]] });
   return page({ path: "/team-training", title: "Dealership Team Training: Sales & BDC | MC Sales Training", desc: "Standardize word tracks, follow-up cadence and daily accountability across your whole store so performance doesn’t depend on a few naturals.",
-    h1: "Team Training for Dealership Sales, BDC & Leadership", body, crumbs: C(["Programs", "/program-pricing"], ["Team Training", "/team-training"]), faqs: TT_FAQ, priority: "0.8" });
+    h1: "Team Training for Dealership Sales, BDC & Leadership", body, crumbs: C(["Programs", "/program-pricing"], ["Team Training", "/team-training"]), faqs: TT_FAQ, priority: "0.8", sticky: ["Training a team?", CTA.call] });
 }
 
 // ── /private-advisory (application form) ──
@@ -169,9 +176,11 @@ export function privateAdvisory() {
   + section("Owners & leadership teams", `<p class="lead-in">Built for decision-makers who want to standardize the floor: language, steps, accountability, and follow-up discipline.</p>${bullets(["Managers who want a repeatable rhythm (not hero reps)", "Stores with inconsistent closing and weak follow-up discipline", "Teams losing gross to avoidable stalls and price pressure", "Leadership that wants training to become culture (not a one-time event)"])}${ctas([["Apply →", "#apply"], ["Compare Programs →", "/program-pricing", "ghost"]])}`, { kicker: "Who it’s for", soft: true })
   + section("A simple 3-step engagement", `<p class="lead-in">Clarity first. Fit second. Execution always.</p>${steps([["Apply", "Share your role, goals, and what feels “stuck” in the process right now."], ["Confirm fit", "If it’s a match, we outline priorities and the best first implementation move."], ["Install the system", "We standardize language, steps, cadence, and accountability across the floor."]])}<p class="note">See the advisory tiers on <a href="/private-sales-advisory">Private Sales Advisory</a> and <a href="/membership">Membership</a>.</p>`, { kicker: "How it works" })
   + section("Apply for Private Advisory", `<span id="mcAdvisoryApply"></span><div class="two"><div><p>Share the basics and we’ll route it correctly. If it’s a fit, we’ll respond with the next step. If not, we’ll route you to the best program path.</p>${bullets(["Leadership cadence + execution standards built for your store.", "Process design that survives staffing changes.", "Accountability rhythm that shows up in numbers."])}<p class="note">Prefer email? <a href="mailto:${EMAIL}?subject=Private%20Advisory%20Inquiry">${EMAIL}</a></p></div><div>${ghlForm("advisory", { title: "Private Advisory application" })}</div></div>${formEmbedScript}`, { kicker: "Application", id: "apply", soft: true })
-  + faqBlock(PA_FAQ, "Advisory questions", "Quick clarity before you apply.");
+  + faqBlock(PA_FAQ, "Advisory questions", "Quick clarity before you apply.")
+  + nextStep({ h2: "Apply, or talk it through first", lead: "Advisory is for owners and leadership teams. Individual reps usually start with coaching or the free tools.", ctas: [["Apply for Private Advisory →", "#apply"], ghost(CTA.call)],
+    links: [["Advisory tiers", "/private-sales-advisory", "High-Impact group advisory and Elite 1-on-1."], ["Team Training", "/team-training", "Standardize language across the store."], ["Membership levels", "/membership", "Free, Premium and VIP Advisory."]] });
   return page({ path: "/private-advisory", title: "Private Advisory & Consulting | MC Sales Training", desc: "High-touch advisory for dealership owners and leaders: standards, accountability, leadership cadence and a sales system that survives turnover.",
-    h1: "Private Advisory & Consulting", body, crumbs: C(["Programs", "/program-pricing"], ["Private Advisory", "/private-advisory"]), faqs: PA_FAQ, priority: "0.8" });
+    h1: "Private Advisory & Consulting", body, crumbs: C(["Programs", "/program-pricing"], ["Private Advisory", "/private-advisory"]), faqs: PA_FAQ, priority: "0.8", sticky: ["Owners & leadership", ["Apply →", "#apply"]] });
 }
 
 // ── /private-sales-advisory (tiers; /private-advisory-membership merged here) ──
@@ -191,9 +200,10 @@ export function privateSalesAdvisory() {
     { k: "Limited Availability", t: "Elite 1-on-1", d: "Weekly private calls and custom system reconstruction for your role and market.", price: "Pricing on the fit call", list: ["Weekly 1-on-1 advisory calls", "Custom script development", "Call review + analysis", "Direct access channel (as agreed)"], cta: ["Request a Consult →", "/sales-calendar"] }]) + `<p class="note">Pricing shown is a starting point. Final fit depends on role, goals, and availability.</p>`, { kicker: "Tiers", id: "tiers" })
   + section("Not Generic. Built Around Your Reality.", `<p class="lead-in">We focus on your specific environment: lead types, objections, market, and role. The goal is mechanical precision—language + sequence + standards.</p>${quote("The 1-on-1 advisory didn’t just help me close more; it helped me understand exactly why I was winning. The mechanics are everything.", "Top Producer, Northeast Region")}${ctas([["Book a Fit Call →", "/sales-calendar"], ["Questions? Contact →", "/contact", "ghost"]])}`, { kicker: "Specialized Coaching", soft: true })
   + faqBlock(PSA_FAQ)
-  + related([["Private Advisory for leaders", "/private-advisory", "Apply for leadership advisory."], ["Membership levels", "/membership", "Free, Premium and VIP Advisory."], ["Individual Coaching", "/individual-coaching", "Fast execution fixes for one rep."]]);
+  + nextStep({ h2: "Pick your level on a fit call", lead: "If you’re unsure which tier fits, take the fit call and we’ll guide you.", ctas: [CTA.call, ghost(CTA.free)], note: "Outcomes vary by market, lead flow, inventory, and execution.",
+    links: [["Private Advisory for leaders", "/private-advisory", "Apply for leadership advisory."], ["Membership levels", "/membership", "Free, Premium and VIP Advisory."], ["Individual Coaching", "/individual-coaching", "Fast execution fixes for one rep."]] });
   return page({ path: "/private-sales-advisory", title: "Private Sales Advisory | MC Sales Training", desc: "Private sales advisory tiers: the free Sales Vault, High-Impact group advisory at $499/mo and Elite 1-on-1 coaching for sales pros and leaders.",
-    h1: "Private Sales Advisory", body, crumbs: C(["Programs", "/program-pricing"], ["Private Sales Advisory", "/private-sales-advisory"]), faqs: PSA_FAQ, priority: "0.8",
+    h1: "Private Sales Advisory", body, crumbs: C(["Programs", "/program-pricing"], ["Private Sales Advisory", "/private-sales-advisory"]), faqs: PSA_FAQ, priority: "0.8", sticky: ["Advisory tiers", CTA.call],
     schema: [{ "@context": "https://schema.org", "@type": "Service", name: "High-Impact Private Sales Advisory", serviceType: "Sales coaching", provider: { "@type": "EducationalOrganization", "@id": `${SITE}/#org`, name: "MC Sales Training", url: SITE + "/" }, url: SITE + "/private-sales-advisory", offers: { "@type": "Offer", price: "499", priceCurrency: "USD", description: "$499 per month; pricing shown is a starting point", url: SITE + "/private-sales-advisory#tiers" } }] });
 }
 
@@ -204,15 +214,17 @@ const MB_FAQ = [
   ["Where do I compare all programs?", "Use <a href=\"/program-pricing\">Program Pricing</a> to compare individual training, team training, and advisory paths side-by-side."],
 ];
 export function membership() {
-  const body = hero({ kicker: "Membership", h1: "Private Advisory & Membership", lede: "Community and membership exist to build consistency. VIP exists for leadership outcomes.", ctas: [["Get Free Word Tracks →", "/free-resources"], ["Explore VIP Advisory", "/private-advisory", "ghost"]] })
+  const body = hero({ kicker: "Membership", h1: "Membership & VIP Advisory", lede: "Community and membership exist to build consistency. VIP exists for leadership outcomes.", ctas: [["Get Free Word Tracks →", "/free-resources"], ["Explore VIP Advisory", "/private-advisory", "ghost"]] })
   + section("Membership Levels", `<p class="lead-in">Pick the level that fits your goals right now. Upgrade anytime.</p>` + cards([
     { k: "Community", t: "Standard (Free)", price: "$0", d: "Best for: installing the basics.", list: ["The Sales Vault access", "Proven car sales habits", "Daily habit mastery"], cta: ["Join Vault", "/free-resources"], after: "Start here if you want a quick win today." },
-    { k: "Membership", t: "Premium", price: "$20 /mo", d: "Best for: accountability + standards.", list: ["Elite community access", "Top performer thinking", "Professional training focus"], cta: ["Upgrade Now", "/program-pricing"], after: "If you want consistency, this is the move." },
+    { k: "Membership", t: "Premium", price: "$20 /mo", d: "Best for: accountability + standards.", list: ["Elite community access", "Top performer thinking", "Professional training focus"], cta: ["Ask About Premium →", "/contact"], after: "If you want consistency, this is the move." },
     { k: "Advisory", t: "VIP Advisory", price: "Confirmed on a consult", d: "Best for: owners + leadership outcomes.", list: ["Confidential consulting", "Outcome-aligned priorities", "Systems that survive turnover"], cta: ["Request Consult", "/private-advisory#apply"], after: "We’ll confirm fit before recommending VIP." }]), { kicker: "Choose a level" })
   + section("Want Structure Beyond Membership?", `<p class="lead-in">Compare training paths, or ask us what fits your goals.</p>${ctas([["Compare Programs →", "/program-pricing"], ["Contact", "/contact", "ghost"], ["Private Advisory", "/private-advisory", "ghost"]])}`, { kicker: "Next step", soft: true })
-  + faqBlock(MB_FAQ, "Membership Questions", "Quick clarity before you choose.");
+  + faqBlock(MB_FAQ, "Membership Questions", "Quick clarity before you choose.")
+  + nextStep({ h2: "Start free, upgrade when you want structure", ctas: [CTA.free, ghost(CTA.call)],
+    links: [["Advisory tiers", "/private-sales-advisory", "High-Impact group advisory and Elite 1-on-1."], ["Courses On Demand", "/courses-on-demand", "Self-paced: Mechanics and Persuasion."], ["8-Week Challenge", "/8-week-challenge", "Weekly live coaching: $392 for 8 weeks."]] });
   return page({ path: "/membership", title: "Membership & VIP Advisory | MC Sales Training", desc: "MC Sales Training membership levels: free Sales Vault access, Premium at $20/mo for accountability, and VIP Advisory for owners and leaders.",
-    h1: "Private Advisory & Membership", body, crumbs: C(["Programs", "/program-pricing"], ["Membership", "/membership"]), faqs: MB_FAQ, priority: "0.7" });
+    h1: "Membership & VIP Advisory", body, crumbs: C(["Programs", "/program-pricing"], ["Membership", "/membership"]), faqs: MB_FAQ, priority: "0.7" });
 }
 
 // ── /ai-executive ──
