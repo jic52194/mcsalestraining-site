@@ -3,7 +3,7 @@
 import { page, hero, section, cards, bullets, steps, faqBlock, quote, related, ghlForm, formEmbedScript, formButton, bookingEmbed, BOOKING_AI, yt, ctas, SITE, EMAIL } from "../scripts/lib.mjs";
 
 const C = (...c) => [["Home", "/"], ...c];
-const course = (path, name, description, extra = {}) => ({ "@context": "https://schema.org", "@type": "Course", name, description, url: SITE + path, provider: { "@id": `${SITE}/#org` }, ...extra });
+const course = (path, name, description, extra = {}) => ({ "@context": "https://schema.org", "@type": "Course", name, description, url: SITE + path, provider: { "@type": "EducationalOrganization", "@id": `${SITE}/#org`, name: "MC Sales Training", url: SITE + "/" }, ...extra });
 
 // ── /8-week-challenge (overview + clickable 35-lesson curriculum; the Mark-led course page was merged here) ──
 const LESSONS = [
@@ -194,7 +194,7 @@ export function privateSalesAdvisory() {
   + related([["Private Advisory for leaders", "/private-advisory", "Apply for leadership advisory."], ["Membership levels", "/membership", "Free, Premium and VIP Advisory."], ["Individual Coaching", "/individual-coaching", "Fast execution fixes for one rep."]]);
   return page({ path: "/private-sales-advisory", title: "Private Sales Advisory | MC Sales Training", desc: "Private sales advisory tiers: the free Sales Vault, High-Impact group advisory at $499/mo and Elite 1-on-1 coaching for sales pros and leaders.",
     h1: "Private Sales Advisory", body, crumbs: C(["Programs", "/program-pricing"], ["Private Sales Advisory", "/private-sales-advisory"]), faqs: PSA_FAQ, priority: "0.8",
-    schema: [{ "@context": "https://schema.org", "@type": "Service", name: "High-Impact Private Sales Advisory", serviceType: "Sales coaching", provider: { "@id": `${SITE}/#org` }, url: SITE + "/private-sales-advisory", offers: { "@type": "Offer", price: "499", priceCurrency: "USD", description: "$499 per month; pricing shown is a starting point", url: SITE + "/private-sales-advisory#tiers" } }] });
+    schema: [{ "@context": "https://schema.org", "@type": "Service", name: "High-Impact Private Sales Advisory", serviceType: "Sales coaching", provider: { "@type": "EducationalOrganization", "@id": `${SITE}/#org`, name: "MC Sales Training", url: SITE + "/" }, url: SITE + "/private-sales-advisory", offers: { "@type": "Offer", price: "499", priceCurrency: "USD", description: "$499 per month; pricing shown is a starting point", url: SITE + "/private-sales-advisory#tiers" } }] });
 }
 
 // ── /membership ──
@@ -239,5 +239,5 @@ export function aiExecutive() {
   + section("", ctas([["Install My AI Executive", "#install"], ["Book Strategy Call", "/sales-calendar", "ghost"]]), { center: true });
   return page({ path: "/ai-executive", title: "AI Executive: 24/7 Dealership AI Webchat | MC Sales Training", desc: "A 24/7 AI Executive trained on your dealership’s content answers questions and books appointments. $196/month plus AI usage fees, cancel anytime.",
     h1: "Stop paying people to miss opportunities.", body, crumbs: C(["Programs", "/program-pricing"], ["AI Executive", "/ai-executive"]), faqs: AI_FAQ, priority: "0.6",
-    schema: [{ "@context": "https://schema.org", "@type": "Service", name: "AI Webchat Executive", serviceType: "AI webchat for car dealerships", provider: { "@id": `${SITE}/#org` }, url: SITE + "/ai-executive", offers: { "@type": "Offer", price: "196", priceCurrency: "USD", description: "$196/month plus AI usage fees, cancel anytime", url: SITE + "/ai-executive#pricing" } }] });
+    schema: [{ "@context": "https://schema.org", "@type": "Service", name: "AI Webchat Executive", serviceType: "AI webchat for car dealerships", provider: { "@type": "EducationalOrganization", "@id": `${SITE}/#org`, name: "MC Sales Training", url: SITE + "/" }, url: SITE + "/ai-executive", offers: { "@type": "Offer", price: "196", priceCurrency: "USD", description: "$196/month plus AI usage fees, cancel anytime", url: SITE + "/ai-executive#pricing" } }] });
 }

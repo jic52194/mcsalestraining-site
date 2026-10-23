@@ -1,8 +1,10 @@
 // Shared layout + helpers for mcsalestraining.com (static build).
 // Brand (kept from the live GoHighLevel site): navy #0a2463, ink #0f1222, rose #e11d48 / hot pink #ff0051 accents,
 // Poppins headings, Inter body, Oswald on the home sales page, MC Trains logo.
+import { fileURLToPath } from "node:url";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { ANSWERS } from "../content/answers.mjs";
 
 export const SITE = "https://mcsalestraining.com";
 export const NAME = "MC Sales Training";
@@ -20,7 +22,7 @@ export const SOCIAL = [
   ["Skool community", SKOOL],
 ];
 export const LOGO = `${SITE}/img/logo-500.png`;
-export const OUT = new URL("../dist/", import.meta.url).pathname;
+export const OUT = fileURLToPath(new URL("../dist/", import.meta.url));
 export const TODAY = new Date().toISOString().slice(0, 10);
 
 // GoHighLevel / LeadConnector embeds, reused exactly as the live site uses them (see README › Forms).
@@ -46,6 +48,8 @@ export const ld = (o) => `<script type="application/ld+json">${JSON.stringify(o)
 const strip = (h) => String(h).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
 export const ORG_ID = `${SITE}/#org`;
+// The agency that built and runs the site (same entity facts as casperb2b.com/portfolio).
+export const CASPERB2B = { "@type": "Organization", "@id": "https://casperb2b.com/#organization", name: "CasperB2B", url: "https://casperb2b.com/" };
 export const ORG = {
   "@context": "https://schema.org", "@type": "EducationalOrganization", "@id": ORG_ID, name: NAME, legalName: "MC Sales Training, LLC", url: SITE + "/", logo: LOGO,
   description: "Dealership sales, BDC and leadership training built on word tracks, follow-up cadence and daily accountability.",
@@ -55,6 +59,7 @@ export const ORG = {
   contactPoint: [{ "@type": "ContactPoint", contactType: "customer support", email: EMAIL, telephone: PHONE_TEL, availableLanguage: "English", hoursAvailable: { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] } }],
   sameAs: SOCIAL.map(([, u]) => u.split("?")[0]),
   knowsAbout: ["dealership sales training", "BDC training", "automotive sales word tracks", "sales follow-up cadence", "objection handling", "sales leadership"],
+  creator: CASPERB2B, brand: CASPERB2B,
 };
 
 export const NAV = [
@@ -81,17 +86,20 @@ const navHtml = (path) => NAV.map(([n, v]) => typeof v === "string"
 const drawerHtml = () => NAV.map(([n, v]) => typeof v === "string" ? `<a href="${v}">${esc(n)}</a>` : `<p class="dh">${esc(n)}</p>${v.map(([a, h]) => `<a href="${h}">${esc(a)}</a>`).join("")}`).join("");
 
 /** The page shell. crumbs = [[name, path]...] adds a visible breadcrumb + BreadcrumbList. faqs = [[q, a]...] adds FAQPage. */
-export function page({ path, title, desc, body, h1, crumbs, faqs, schema = [], noindex = false, theme = "", image, priority = "0.7", preload = "", head = "" }) {
+export function page({ path, title, desc, body, h1, answer = ANSWERS[path], crumbs, faqs, schema = [], noindex = false, theme = "", image, priority = "0.7", preload = "", head = "" }) {
   if (title.length > 60) throw new Error(`title > 60 chars on ${path}: ${title} (${title.length})`);
   if (desc.length > 155 || desc.length < 50) throw new Error(`description length ${desc.length} on ${path}`);
   const url = SITE + (path === "/" ? "/" : path);
   const img = image ? SITE + image : LOGO;
-  const schemas = [{ "@context": "https://schema.org", "@type": "WebPage", "@id": url, url, name: title, description: desc, inLanguage: "en-US", isPartOf: { "@type": "WebSite", "@id": `${SITE}/#site`, name: NAME, url: SITE + "/" }, publisher: { "@id": ORG_ID } }];
-  schemas.push(path === "/" ? ORG : { "@context": "https://schema.org", "@type": "EducationalOrganization", "@id": ORG_ID, name: NAME, url: SITE + "/", logo: LOGO });
+  const schemas = [{ "@context": "https://schema.org", "@type": "WebPage", "@id": url, url, name: title, description: desc, inLanguage: "en-US", isPartOf: { "@type": "WebSite", "@id": `${SITE}/#site`, name: NAME, url: SITE + "/", creator: CASPERB2B }, publisher: { "@id": ORG_ID } }];
+  schemas.push(path === "/" ? ORG : { "@context": "https://schema.org", "@type": "EducationalOrganization", "@id": ORG_ID, name: NAME, url: SITE + "/", logo: LOGO, creator: CASPERB2B, brand: CASPERB2B });
   if (crumbs && crumbs.length > 1) schemas.push({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs.map(([n, p], i) => ({ "@type": "ListItem", position: i + 1, name: n, item: SITE + (p || "/") })) });
   if (faqs && faqs.length) schemas.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([q, a]) => ({ "@type": "Question", name: strip(q), acceptedAnswer: { "@type": "Answer", text: strip(a) } })) });
   schemas.push(...schema);
   if (!noindex) { urls.push([path, TODAY, priority]); PAGES.push({ path, title, desc, h1: strip(h1 || "") }); }
+  if (!noindex && !answer) throw new Error(`${path} has no answer-first sentence in content/answers.mjs`);
+  // Answer-first: the first paragraph after the H1 opens with what the page is and who it is for.
+  if (answer) body = body.replace(/(<\/h1>\s*)(<p class="lede">)?/, (m, end, lede) => lede ? `${end}<p class="lede">${answer} ` : `${end}<p class="lede">${answer}</p>`);
   const h1count = (body.match(/<h1[\s>]/g) || []).length;
   if (h1count !== 1) throw new Error(`${path} has ${h1count} h1 elements`);
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -124,7 +132,7 @@ ${schemas.map(ld).join("")}
 <div><p class="fh">Company</p><p><a href="/about">About Us</a><br><a href="/our-team">Our Team</a><br><a href="/how-the-system-works">How the System Works</a><br><a href="/proof">Proof / Results</a><br><a href="/faq">FAQ</a><br><a href="/contact">Contact</a><br><a href="/sales-calendar">Book a Strategy Call</a><br><a href="/sitemap">Site Directory</a></p></div>
 </div>
 <p class="legal"><a href="/privacy-policy">Privacy Policy</a> · <a href="/terms-of-service">Terms of Service</a> · <a href="/terms-of-use">Terms of Use</a> · <a href="/disclaimer">Disclaimer</a> · <a href="#" data-consent-open>Cookie settings</a></p>
-<p class="fine">Owned and operated by <a href="https://raibrollc.com" rel="noopener">Raibro LLC</a>. © ${TODAY.slice(0, 4)} MC Sales Training. All rights reserved.</p>
+<p class="fine">Owned and operated by <a href="https://raibrollc.com" rel="noopener">Raibro LLC</a>. © ${TODAY.slice(0, 4)} MC Sales Training. All rights reserved. · <a href="https://casperb2b.com/portfolio" rel="noopener">Built by CasperB2B</a></p>
 </div></footer>
 <script src="/assets/app.js?v=${TODAY}" defer></script><script src="/assets/t.js" data-site="mcsalestraining" data-privacy="/privacy-policy" data-banner="1" defer></script>
 </body></html>`;

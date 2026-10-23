@@ -2,7 +2,7 @@
 import { page, hero, section, cards, bullets, steps, faqBlock, related, ghlForm, formEmbedScript, formButton, ctas, SITE, SKOOL } from "../scripts/lib.mjs";
 
 const C = (...c) => [["Home", "/"], ...c];
-const course = (path, name, description, instructors) => ({ "@context": "https://schema.org", "@type": "Course", name, description, url: SITE + path, provider: { "@id": `${SITE}/#org` }, hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", instructor: instructors.map(([n, u]) => ({ "@type": "Person", name: n, url: SITE + u })) } });
+const course = (path, name, description, instructors) => ({ "@context": "https://schema.org", "@type": "Course", name, description, url: SITE + path, provider: { "@type": "EducationalOrganization", "@id": `${SITE}/#org`, name: "MC Sales Training", url: SITE + "/" }, hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", instructor: instructors.map(([n, u]) => ({ "@type": "Person", name: n, url: SITE + u })) } });
 
 // ── /courses-on-demand ──
 const COD_FAQ = [

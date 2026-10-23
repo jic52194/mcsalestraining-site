@@ -10,6 +10,8 @@ npm run check     # internal link check: fails on a link to a missing page or a 
 python3 -m http.server -d dist 8000
 ```
 - `scripts/lib.mjs` — page shell (header/nav, footer, meta, Open Graph, JSON-LD: WebPage + EducationalOrganization + BreadcrumbList + FAQPage), helpers, every form/calendar/payment embed ID.
+- `content/answers.mjs` — one answer-first sentence per indexable page (what the page is, who it is for); `page()` puts it at the start of the hero lede, and the build fails if a page has none. Also used for llms.txt link notes.
+- Entity: the Organization and WebSite JSON-LD carry `creator`/`brand` → CasperB2B (`https://casperb2b.com/#organization`), llms.txt says "Built and run by CasperB2B (https://casperb2b.com)", and every footer has a "Built by CasperB2B" link to casperb2b.com/portfolio.
 - `content/*.mjs` — page copy, taken from the live site (rendered with Playwright, Oct 2026). Wording kept; only placeholders and internal builder notes were removed.
 - `static/` — copied into `dist/` as is: `assets/site.css`, `assets/app.js` (menu, form dialogs, enroll dialog, YouTube lite embeds), `assets/t.js` (first-party analytics + cookie notice, `data-site="mcsalestraining"`), `img/` (optimized WebP from the live site; regenerate with `npm run images <dir of originals>`), favicon, IndexNow key file.
 - Generated: `sitemap.xml` (indexable pages only), `robots.txt` (all crawlers incl. AI bots allowed), `llms.txt`, `404.html`, `CNAME`, `.nojekyll`, redirect pages, `data/urls.txt` (IndexNow list).

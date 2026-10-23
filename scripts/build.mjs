@@ -1,4 +1,5 @@
 // Builds mcsalestraining.com into dist/ (static, GitHub Pages). node scripts/build.mjs
+import { fileURLToPath } from "node:url";
 import { rmSync, mkdirSync, cpSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { SITE, OUT, TODAY, urls, PAGES, write, redirect, page, hero, section, esc, EMAIL, PHONE_TEXT, PHONE_VANITY, wordCount } from "./lib.mjs";
@@ -8,10 +9,11 @@ import { coursesOnDemand, mechanicsOfSales, learnToEarn, howItWorks } from "../c
 import { freeResources, freeWordTracks, dailyNonNegotiables, miniBook, salesCalendar, getTrained, bdcAppointments, builtOnProcess, makeMoreMoney } from "../content/resources.mjs";
 import { about, ourPhilosophy, whyWorkWithUs, secretSauce, ourTeam, mark, jared, proof, faq, contact } from "../content/company.mjs";
 import { privacy, termsOfService, termsOfUse, disclaimer } from "../content/legal.mjs";
+import { ANSWERS } from "../content/answers.mjs";
 
 
 rmSync(OUT, { recursive: true, force: true }); mkdirSync(OUT, { recursive: true });
-const STATIC = new URL("../static/", import.meta.url).pathname;
+const STATIC = fileURLToPath(new URL("../static/", import.meta.url));
 if (existsSync(STATIC)) cpSync(STATIC, OUT, { recursive: true });
 
 // ── pages (order = sitemap order) ──
@@ -62,10 +64,12 @@ for (const [from, to] of Object.entries(LEGACY)) write(from, redirect(to));
 // ── sitemap / robots / llms.txt / CNAME / IndexNow ──
 writeFileSync(join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([p, m, pr]) => `<url><loc>${SITE}${p}</loc><lastmod>${m}</lastmod><priority>${pr}</priority></url>`).join("\n")}\n</urlset>\n`);
 writeFileSync(join(OUT, "robots.txt"), `User-agent: *\nAllow: /\n\n# AI answer engines and assistants are welcome\nUser-agent: GPTBot\nAllow: /\nUser-agent: OAI-SearchBot\nAllow: /\nUser-agent: ChatGPT-User\nAllow: /\nUser-agent: ClaudeBot\nAllow: /\nUser-agent: Claude-SearchBot\nAllow: /\nUser-agent: Claude-User\nAllow: /\nUser-agent: anthropic-ai\nAllow: /\nUser-agent: PerplexityBot\nAllow: /\nUser-agent: Perplexity-User\nAllow: /\nUser-agent: Google-Extended\nAllow: /\nUser-agent: Applebot-Extended\nAllow: /\nUser-agent: Bingbot\nAllow: /\nUser-agent: CCBot\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-const L = (p, t, d = "") => `- [${t}](${SITE}${p})${d ? `: ${d}` : ""}`;
+const L = (p, t, d = ANSWERS[p] || "") => `- [${t}](${SITE}${p})${d ? `: ${d}` : ""}`;
 writeFileSync(join(OUT, "llms.txt"), `# MC Sales Training
 
 > MC Sales Training is practical sales training for car dealership Sales, BDC (business development center) and leadership teams. It installs a repeatable system built on three things: word tracks for the moments that decide a deal, a follow-up cadence, and daily accountability. It was founded by Mark Casper and Jared Casper.
+
+Built and run by CasperB2B (https://casperb2b.com)
 
 ## Key facts
 - Who it is for: dealership salespeople (floor, phone and internet), BDC teams (contact to appointment to show) and sales leaders/managers.
@@ -76,6 +80,7 @@ writeFileSync(join(OUT, "llms.txt"), `# MC Sales Training
 - Other programs: Individual Coaching (1:1), Team Training (standardize language and process across a store) and Private Advisory (high-touch, for owners and leaders); pricing for these is handled on a short fit call. Private Sales Advisory "High-Impact" group advisory is $499/month. Premium membership is $20/month. The AI Executive (24/7 AI webchat for dealerships) is $196/month plus AI usage fees.
 - Self-paced courses: The Mechanics of Sales (Mark and Jared; accessed through the MC Sales Training Skool community) and The Language of Persuasion (Jared).
 - Free resources ("Sales Vault"): Daily Non-Negotiables, a free Sales Mini-Book (https://mcsalestraining.com/free-mini-book), and free word tracks and rebuttals, delivered instantly by email.
+- Website: mcsalestraining.com was built and is run by CasperB2B (https://casperb2b.com/portfolio), a web and marketing agency.
 - No income or results guarantees; results depend on effort, market, inventory and lead flow.
 - Contact: ${EMAIL}; text ${PHONE_TEXT}; call ${PHONE_VANITY}. Responds Monday-Friday, typically within 24 hours on business days. MC Sales Training, LLC, 252 Daniel Webster Hwy #1093, Nashua, NH 03060.
 
@@ -130,6 +135,6 @@ ${L("/disclaimer", "Disclaimer")}
 `);
 writeFileSync(join(OUT, "CNAME"), "mcsalestraining.com\n");
 writeFileSync(join(OUT, ".nojekyll"), "");
-mkdirSync(new URL("../data/", import.meta.url).pathname, { recursive: true });
-writeFileSync(new URL("../data/urls.txt", import.meta.url).pathname, urls.map(([p]) => SITE + p).join("\n") + "\n");
+mkdirSync(fileURLToPath(new URL("../data/", import.meta.url)), { recursive: true });
+writeFileSync(fileURLToPath(new URL("../data/urls.txt", import.meta.url)), urls.map(([p]) => SITE + p).join("\n") + "\n");
 console.log(`built ${urls.length} pages + ${Object.keys(LEGACY).length} redirects + /sitemap directory + 404 at ${TODAY}; home: ${wordCount((await import("node:fs")).readFileSync(join(OUT, "index.html"), "utf8"))} words`);
