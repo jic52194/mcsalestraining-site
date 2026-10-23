@@ -59,7 +59,7 @@ export const ORG = {
   contactPoint: [{ "@type": "ContactPoint", contactType: "customer support", email: EMAIL, telephone: PHONE_TEL, availableLanguage: "English", hoursAvailable: { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] } }],
   sameAs: SOCIAL.map(([, u]) => u.split("?")[0]),
   knowsAbout: ["dealership sales training", "BDC training", "automotive sales word tracks", "sales follow-up cadence", "objection handling", "sales leadership"],
-  creator: CASPERB2B, brand: CASPERB2B,
+  creator: CASPERB2B,
 };
 
 export const NAV = [
@@ -92,7 +92,7 @@ export function page({ path, title, desc, body, h1, answer = ANSWERS[path], crum
   const url = SITE + (path === "/" ? "/" : path);
   const img = image ? SITE + image : LOGO;
   const schemas = [{ "@context": "https://schema.org", "@type": "WebPage", "@id": url, url, name: title, description: desc, inLanguage: "en-US", isPartOf: { "@type": "WebSite", "@id": `${SITE}/#site`, name: NAME, url: SITE + "/", creator: CASPERB2B }, publisher: { "@id": ORG_ID } }];
-  schemas.push(path === "/" ? ORG : { "@context": "https://schema.org", "@type": "EducationalOrganization", "@id": ORG_ID, name: NAME, url: SITE + "/", logo: LOGO, creator: CASPERB2B, brand: CASPERB2B });
+  schemas.push(path === "/" ? ORG : { "@context": "https://schema.org", "@type": "EducationalOrganization", "@id": ORG_ID, name: NAME, url: SITE + "/", logo: LOGO, creator: CASPERB2B });
   if (crumbs && crumbs.length > 1) schemas.push({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs.map(([n, p], i) => ({ "@type": "ListItem", position: i + 1, name: n, item: SITE + (p || "/") })) });
   if (faqs && faqs.length) schemas.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([q, a]) => ({ "@type": "Question", name: strip(q), acceptedAnswer: { "@type": "Answer", text: strip(a) } })) });
   schemas.push(...schema);
