@@ -2,7 +2,7 @@
 import { fileURLToPath } from "node:url";
 import { rmSync, mkdirSync, cpSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { SITE, OUT, TODAY, urls, PAGES, write, redirect, page, hero, section, esc, EMAIL, PHONE_TEXT, PHONE_VANITY, wordCount } from "./lib.mjs";
+import { SITE, OUT, TODAY, urls, PAGES, write, redirect, page, hero, section, nextStep, esc, EMAIL, PHONE_TEXT, PHONE_VANITY, wordCount } from "./lib.mjs";
 import { home } from "../content/home.mjs";
 import { challenge, challengeApply, programPricing, individualCoaching, teamTraining, privateAdvisory, privateSalesAdvisory, membership, aiExecutive } from "../content/programs.mjs";
 import { coursesOnDemand, mechanicsOfSales, learnToEarn, howItWorks } from "../content/courses.mjs";
@@ -47,7 +47,12 @@ write("/sitemap", page({ path: "/sitemap", title: "Site Directory | MC Sales Tra
 
 // ── 404 ──
 writeFileSync(join(OUT, "404.html"), page({ path: "/404", title: "Page Not Found | MC Sales Training", desc: "That page doesn’t exist or has moved. Start with the free Sales Vault, the 8-Week Challenge or the full site directory.", noindex: true, h1: "Page not found",
-  body: hero({ kicker: "404", h1: "Page not found", lede: "That page doesn’t exist or has moved.", ctas: [["Go to the home page", "/"], ["Free Sales Vault", "/free-resources", "ghost"], ["Site Directory", "/sitemap", "ghost"]] }) })
+  body: hero({ kicker: "404", h1: "Page not found", lede: "That page doesn’t exist or has moved. Try one of these instead:", ctas: [["Go to the home page", "/"], ["Get Free Word Tracks →", "/free-resources", "ghost"], ["Site Directory", "/sitemap", "ghost"]] })
+    + nextStep({ h2: "Popular pages", soft: false, note: `Still can’t find it? Email <a href="mailto:${EMAIL}">${EMAIL}</a> or text ${PHONE_TEXT}.`, links: [
+      ["8-Week Sales Challenge", "/", "Weekly live coaching: $392 for the 8-week program."], ["The 8-week curriculum", "/8-week-challenge", "35 Mark-led lesson videos, week by week."],
+      ["The Sales Vault (free)", "/free-resources", "Word tracks, the mini-book and Daily Non-Negotiables."], ["Free Sales Mini-Book", "/free-mini-book", "A free PDF, delivered by email."],
+      ["Compare programs", "/program-pricing", "Individual coaching, team training and advisory."], ["Book a fit call", "/sales-calendar", "Bring one real scenario."],
+      ["Courses On Demand", "/courses-on-demand", "The Mechanics of Sales and The Language of Persuasion."], ["FAQ", "/faq", "Programs, pricing, accountability and policies."], ["Contact", "/contact", "We respond Monday–Friday."]] }) })
   .replace(`<link rel="canonical" href="${SITE}/404">`, ""));
 
 // ── old URLs → closest real page (GitHub Pages can't 301: canonical + meta refresh + noindex) ──
